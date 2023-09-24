@@ -7,20 +7,20 @@ class Ticker(object):
     ...
     Attributes
     ----------
+    stock : str
+        stock ticker name
     data : Dataframe
-        Timeseries daily data of the stock
-    pe : float
-        PE (Current share price / Earnings per share) of the stock
-    beta : float
-        beta ((covariance(stock returns, index returns) / variance(index returns))
-        volatility of the stock) of the stock
+        timeseries daily data of the stock
+    fundamentals : dict
+        fundamental data of the stock
     """
-    def __init__(self, ticker):
+    def __init__(self, ticker, period = "10Y"):
         self.stock = ticker
-        self.data = yf.download(ticker)
-        fundamentals = yf.Ticker(ticker).info
-        self.pe = fundamentals['trailingPE']
-        self.beta = fundamentals['beta']
+        data = yf.download(ticker, period=period)
+        data['daily_return'] = (data['Adj Close'] - data['Adj Close'].shift(1)) / data['Adj Close'].shift(1)
+        data['cum_return'] = (1+data['daily_return']).cumprod()-1
+        self.data = data
+        self.fundamentals = yf.Ticker(ticker).info
 
     def __str__(self):
         return str(self.stock)

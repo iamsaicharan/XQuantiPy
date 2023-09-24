@@ -21,17 +21,11 @@ def test_ticker_data_type():
     """
     assert type(Ticker("AAPL").data).__name__ == "DataFrame"
 
-def test_ticker_pe_type():
+def test_ticker_fundamentals_type():
     """
     Asserts the pe variable of Ticker Object - should assert pe to float
     """
-    assert type(Ticker("AAPL").pe) == float
-
-def test_ticker_beta_type():
-    """
-    Asserts the beta variable of Ticker Object - should assert beta to float
-    """
-    assert type(Ticker("AAPL").beta) == float
+    assert type(Ticker("AAPL").fundamentals) == dict
 
 
 
