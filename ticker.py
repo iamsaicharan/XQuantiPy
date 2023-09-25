@@ -14,6 +14,12 @@ class Ticker(object):
         timeseries daily data of the stock
     fundamentals : dict
         fundamental data of the stock
+
+    Methods:
+    get_beta(self)
+        gets the beta value of the ticker object
+    get_alpha(Self)
+        gets the alpha value of the ticker object
     """
     def __init__(self, ticker, period = "10Y"):
         self.stock = ticker
