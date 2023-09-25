@@ -1,9 +1,10 @@
 import yfinance as yf
 import pandas as pd
+import constants
 
 class Ticker(object):
     """
-    A class to represent a stock
+    A class to represent a stock object
     ...
     Attributes:
     stock : str
@@ -21,7 +22,7 @@ class Ticker(object):
     get_alpha(Self)
         gets the alpha value of the ticker object
     """
-    def __init__(self, ticker, period = "10Y"):
+    def __init__(self, ticker, period = constants.PERIOD):
         self.stock = ticker
         self.period = period
         data = yf.download(ticker, period=period)
@@ -35,6 +36,8 @@ class Ticker(object):
         """
         Summary:
         A method to calculate the beta value of the stock
+        this value measures the expected move in a stock relative
+        to movements in the overall market
 
         Return:
         beta : float
@@ -42,7 +45,7 @@ class Ticker(object):
         """
         return self.fundamentals['beta']
 
-    def get_alpha(self, index, risk_free_rate=0.05):
+    def get_alpha(self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE):
         """
         Summary:
         A method to calculate the alpha value of the stock which is a measure
@@ -50,7 +53,7 @@ class Ticker(object):
 
         Parameters:
         index : str
-            a string for the bench mark index eg: for snp500 -> ^GSPC
+            a string for the bench mark index default: ^GSPC
         risk_free_rate : float
             value of the risk free return value default: 0.05 i.e. 5%
 
