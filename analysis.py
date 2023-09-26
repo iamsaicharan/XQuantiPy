@@ -17,6 +17,10 @@ class Analysis(object):
         of the stocks listed
     """
     def __init__(self, tickers):
+        assert type(tickers) == list, "Error: Please insert list of ticker objects as arguments"
+        assert len(tickers) > 0, "Error: Empty list of ticker objects as arguments"
+        for i in tickers:
+            assert type(i).__name__ == "Ticker", "Error: List must have ticker objects"
         self.tickers = tickers
 
     def show_alpha_vs_beta(self, index = constants.BENCHMARK_INDEX, risk_free_rate = constants.RISK_FREE_RATE):
@@ -34,15 +38,23 @@ class Analysis(object):
         plt : module
             returns the object displays the matplotlib plot of the graph
         """
+        assert type(index) == str, "Error: index argument must be string"
+        assert type(risk_free_rate) == float, "Error: risk_free_rate argument must be float"
         data = {}
         for ticker in self.tickers:
             data[ticker.stock] = [ticker.get_alpha(index), ticker.get_beta()]
         labels, points = zip(*data.items())
         x, y = zip(*points)
         plt.figure(figsize=(8, 6))
+        plt.axhline(1, color='black',linewidth=2)
+        plt.axvline(0, color='black',linewidth=2)
         plt.scatter(x, y, marker='o', s=100)
         for i, label in enumerate(labels):
             plt.annotate(label, (x[i], y[i]), textcoords="offset points", xytext=(0,10), ha='center')
+        plt.text(2, 1.1, 'High Return - High Risk', fontsize=7, ha='center', va='center')
+        plt.text(2, 0.9, 'High Return - Low Risk', fontsize=7, ha='center', va='center')
+        plt.text(-2, 1.1, 'Low Return - High Risk', fontsize=7, ha='center', va='center')
+        plt.text(-2, 0.9, 'Low Return - Low Risk', fontsize=7, ha='center', va='center')
         plt.title('Alpha vs Beta')
         plt.xlabel('Alpha')
         plt.ylabel('Beta')

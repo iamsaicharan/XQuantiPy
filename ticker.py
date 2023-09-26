@@ -23,6 +23,8 @@ class Ticker(object):
         gets the alpha value of the ticker object
     """
     def __init__(self, ticker, period = constants.PERIOD):
+        assert type(ticker) == str, "Error: ticker argument must be a string"
+        assert type(period) == str, "Error: period argument must be a string"
         self.stock = ticker
         self.period = period
         data = yf.download(ticker, period=period)
@@ -61,6 +63,8 @@ class Ticker(object):
         alpha : float
             return value which represents the alpha of the stock
         """
+        assert type(index) == str, "Error: index argument must be string"
+        assert type(risk_free_rate) == float, "Error: risk_free_rate argument must be float"
         index_data = yf.download(index, period=self.period)
         index_data['daily_return'] = (index_data['Adj Close'] - index_data['Adj Close'].shift(1)) / index_data['Adj Close'].shift(1)
         index_data['cum_return'] = (1+index_data['daily_return']).cumprod()-1
