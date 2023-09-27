@@ -19,7 +19,7 @@ class Ticker(object):
     Methods:
     get_beta(self)
         gets the beta value of the ticker object
-    get_alpha(Self)
+    get_alpha(Self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
         gets the alpha value of the ticker object
     """
     def __init__(self, ticker, period = constants.PERIOD):
