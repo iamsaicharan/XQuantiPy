@@ -1,4 +1,3 @@
-import wbdata
 import constants
 import datetime
 import re
