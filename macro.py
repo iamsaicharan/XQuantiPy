@@ -4,6 +4,7 @@ import datetime
 import re
 import pandas as pd
 from dateutil.relativedelta import relativedelta
+from wbfetcher import Wbfetcher
 
 class Macro(object):
     """
@@ -77,7 +78,7 @@ class Macro(object):
             'NY.GDP.MKTP.CD': 'Gross Domestic Product (current US$)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -105,7 +106,7 @@ class Macro(object):
             'NY.GDP.MKTP.KD.ZG': 'GDP growth (annual %)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -133,7 +134,7 @@ class Macro(object):
             'NY.GDP.PCAP.CD': 'GDP per capita (current US$)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -168,7 +169,7 @@ class Macro(object):
             'NY.GDP.MKTP.CN': 'GDP (current LCU)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -197,7 +198,7 @@ class Macro(object):
             'FP.CPI.TOTL.ZG': 'Inflation, GDP deflator (annual %)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -227,7 +228,7 @@ class Macro(object):
             'SL.UEM.TOTL.ZS': 'Unemployment rate (% of total labor force)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -255,7 +256,7 @@ class Macro(object):
             'NE.EXP.GNFS.CD': 'Exports of goods and services (current US$)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -283,7 +284,7 @@ class Macro(object):
             'NE.IMP.GNFS.CD': 'Imports of goods and services (current US$)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -311,7 +312,7 @@ class Macro(object):
             'NE.EXP.GNFS.KD.ZG': 'Export growth (annual %)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -339,7 +340,7 @@ class Macro(object):
             'NE.IMP.GNFS.KD.ZG': 'Import growth (annual %)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -368,7 +369,7 @@ class Macro(object):
             'SL.TLF.TOTL.IN': 'Total labor force (people)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -396,7 +397,7 @@ class Macro(object):
             'SP.POP.TOTL': 'Total population',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -424,7 +425,7 @@ class Macro(object):
             'DT.DOD.DECT.CD': 'External debt stocks, total (current US$)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -452,7 +453,7 @@ class Macro(object):
             'DT.DOD.DECT.GN.ZS': 'External debt (% of GNI)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -482,7 +483,7 @@ class Macro(object):
             'SH.XPD.CHEX.PC.CD': 'Current health expenditure per capita (current US$)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -512,7 +513,7 @@ class Macro(object):
             'SE.XPD.TOTL.GB.ZS': 'Government expenditure on education, total (% of government expenditure)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
@@ -540,7 +541,7 @@ class Macro(object):
             'EG.USE.PCAP.KG.OE': 'Energy use (kg of oil equivalent per capita)',
         }
         country_code = self.country
-        data = wbdata.get_dataframe(indicators, country=country_code, data_date=data_date)
+        data = Wbfetcher.get_data(indicators, country_code, data_date)
         data.reset_index(inplace=True)
         return pd.DataFrame(data)
     
