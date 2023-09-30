@@ -1,3 +1,3 @@
 # finmod
 
-*"Just starting out a financial project aiming to make the analysis process a little bit better."*
+*"Just starting out a financial project aiming to make the analysis process just a little bit better."*
