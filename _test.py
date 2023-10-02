@@ -20,8 +20,8 @@ def test_ticker_data_type():
 def test_ticker_fundamentals_type():
     assert type(Ticker("AAPL").fundamentals) == dict
 
-def test_ticker_get_beta_method_return_type():
-    assert type(Ticker("AAPL").get_beta()) == float
+def test_ticker_get_adj_close_method_return_type():
+    assert type(Ticker("AAPL").get_adj_close()).__name__ == "DataFrame"
 
 def test_ticker_get_alpha_method_return_type():
     assert type(Ticker("AAPL").get_alpha()) == float

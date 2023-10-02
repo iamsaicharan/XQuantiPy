@@ -1,6 +1,7 @@
 import yfinance as yf
 import pandas as pd
 import constants
+import copy
 
 class Ticker(object):
     """
@@ -17,6 +18,8 @@ class Ticker(object):
         fundamental data of the stock
 
     Methods:
+    get_adj_close(self)
+        returns a adj close dataframe for the ticker
     get_beta(self)
         gets the beta value of the ticker object
     get_alpha(Self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
@@ -33,6 +36,19 @@ class Ticker(object):
         data['cum_return'] = (1+data['daily_return']).cumprod()-1
         self.data = data
         self.fundamentals = yf.Ticker(ticker).info
+
+    def get_adj_close(self):
+        """
+        Summary:
+        A method to get only the adj close column which is renamed to the self.stock name
+
+        Return:
+        adj_close : dataframe
+            return value which represents the dataframe with adj close column
+        """
+        adj_close = copy.deepcopy(self.data[['Date', 'Adj Close']])
+        adj_close.rename(columns={'Adj Close': str(self.stock)}, inplace=True)
+        return adj_close
 
     def get_beta(self):
         """
