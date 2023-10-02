@@ -29,6 +29,9 @@ def test_ticker_get_alpha_method_return_type():
 def test_analysis_show_alpha_vs_beta_return_type():
     assert type(Analysis([Ticker("AAPL")]).show_alpha_vs_beta()).__name__ == "module"
 
+def test_analysis_get_merged_adj_close_return_type():
+    assert type(Analysis([Ticker("AAPL")]).get_merged_adj_close()).__name__ == "DataFrame"
+
 def test_macro_get_GDP_method_return_type():
     assert type(Macro("IN").get_GDP()).__name__ == "DataFrame"
 

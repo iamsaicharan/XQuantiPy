@@ -60,5 +60,22 @@ class Analysis(object):
         plt.ylabel('Beta')
         plt.grid(True)
         return plt
+    
+    def get_merged_adj_close(self):
+        """
+        Summary:
+        A method to merge all the data with adj close values in the tickers list
+
+        Return:
+        merged_dfs : DataFrame
+            returns the dataframe with adj close value of the tickers
+        """
+        if len(self.tickers) == 1:
+            return self.tickers[0].get_adj_close()
+        merged_dfs = self.tickers[0].get_adj_close()
+        for i in range(1, len(self.tickers)):
+            merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
+        return merged_dfs
         
+
     
