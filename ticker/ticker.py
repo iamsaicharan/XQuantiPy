@@ -1,6 +1,6 @@
 import yfinance as yf
 import pandas as pd
-import constants
+import constants.constants as constants
 import copy
 
 class Ticker(object):

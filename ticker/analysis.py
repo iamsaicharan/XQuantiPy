@@ -1,11 +1,11 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import constants
+import constants.constants as constants
 
 class Analysis(object):
     """
-    A class to perform the analysis
+    A class to perform the analysis on tickers
     ...
     Attributes:
     tickers : list
