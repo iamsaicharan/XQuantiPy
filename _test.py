@@ -12,7 +12,7 @@ To test:
 import yfinance as yf
 from ticker.ticker import Ticker
 from ticker.analysis import Analysis
-from micro.macro import Macro
+from macro.macro import Macro
 import pytest
 
 test_tickers = ['AAPL', 'MSFT']

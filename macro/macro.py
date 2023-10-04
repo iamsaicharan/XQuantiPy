@@ -3,7 +3,7 @@ import datetime
 import re
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-from micro.wbfetcher import Wbfetcher
+from macro.wbfetcher import Wbfetcher
 
 class Macro(object):
     """
@@ -80,6 +80,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_GDP_growth(self, period = constants.PERIOD):
@@ -109,6 +110,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_GDP_per_capita(self, period = constants.PERIOD):
@@ -138,6 +140,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_GDP_current_LCU(self, period = constants.PERIOD):
@@ -174,6 +177,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_inflation(self, period = constants.PERIOD):
@@ -204,6 +208,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_unemployment(self, period = constants.PERIOD):
@@ -235,6 +240,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_export(self, period = constants.PERIOD):
@@ -264,6 +270,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_import(self, period = constants.PERIOD):
@@ -293,6 +300,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_export_growth(self, period = constants.PERIOD):
@@ -322,6 +330,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_import_growth(self, period = constants.PERIOD):
@@ -351,6 +360,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_labor_force(self, period = constants.PERIOD):
@@ -381,6 +391,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_population(self, period = constants.PERIOD):
@@ -410,6 +421,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_external_debt(self, period = constants.PERIOD):
@@ -439,6 +451,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_external_debt_GNI(self, period = constants.PERIOD):
@@ -468,6 +481,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_health_expenditure(self, period = constants.PERIOD):
@@ -499,6 +513,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_education_expenditure(self, period = constants.PERIOD):
@@ -530,6 +545,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
     def get_energy_use(self, period = constants.PERIOD):
@@ -559,6 +575,7 @@ class Macro(object):
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)
         data.rename(columns={'date': 'Date'}, inplace=True)
+        data = data.iloc[::-1]
         return data
     
 
