@@ -1,8 +1,8 @@
 import setuptools
 
 setuptools.setup(
-    name='XQuantiPy',
-    version='0.0',
+    name='xquantipy',
+    version='0.0.1',
     author='Sai Charan Vadakapur',
     description='Module for financial analysis',
     packages=setuptools.find_packages(),
