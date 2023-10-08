@@ -1,9 +1,9 @@
-import constants.constants as constants
+import xquantipy.constants.constants as constants
 import datetime
 import re
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-from macro.wbfetcher import Wbfetcher
+from xquantipy.macro.wbfetcher import Wbfetcher
 
 class Macro(object):
     """

@@ -1,5 +1,5 @@
 from macro.analysis import Analysis
-from constants import constants
+from xquantipy.constants import constants
 import pandas as pd
 import matplotlib.pyplot as plt
 
