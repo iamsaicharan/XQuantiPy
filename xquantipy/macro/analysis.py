@@ -48,3 +48,28 @@ class Analysis(object):
         for i in range(1, len(data_list)):
             merged_df = pd.merge(merged_df, data_list[i], on='Date', how='outer')
         return merged_df
+    
+    def visualize_GDP(self, period=constants.PERIOD):
+        """
+        Summary:
+        A method to get visualization for gdp of the object macros
+
+        Parameters:
+        period : str
+            a string for period: "10Y"
+
+        Return:
+        plt : module
+            returns the object displays the matplotlib plot of the graph
+        """
+        df = self.get_merged_GDP(period=period)
+        df.set_index('Date', inplace=True)
+        for column in df.columns:
+            plt.plot(df.index, df[column], label=column)
+        plt.title('GDP Comparison')
+        plt.xlabel('Date')
+        plt.ylabel('GDP')
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout() 
+        return plt

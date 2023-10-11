@@ -1,0 +1,52 @@
+1. Get Ticker data with daily and cum_return
+2. Get beta value method
+3. Get alpha value method
+4. alpha vs beta graph analysis
+    class Analysis -> Attributes stocks list with ticker object
+5. In the alpha vs beta graph make it properly formated in 4 quadrants
+6. Get economic data
+    1. write the testing code
+    2. write own wbdate module
+
+constants
+    __init__.py
+    constants
+
+ticker
+    __init__.py
+    ticker
+    analysis
+
+micro
+    __init__.py
+    micro
+    analysis
+    wbfetcher
+
+7. Visulization modules
+    - with multiple selection in gdp
+8. More comprehensive test cases with proper input values
+9. statistical analysis
+    a. Correlation analysis
+    b. regression analysis
+    c. time series analysis
+        i. moving average MA 
+        ii. autoregressive model AR 
+        iii. autoregressive integration moving average models ARIMA 
+    d. probability distribution
+        i. normal distribution
+        ii. log-normal distribution
+    e. monte carlo simulations
+        i. options pricing
+        ii. risk assessment
+    f. volatility analysis
+        i. GARCH generalized autoregressive conditional heteroskedasticity
+    g. non-parametric statistics
+        i. Mann-Whitney U test
+        ii. Wilcoxon signed-rank test
+    h. bayesian analysis
+        i. portfolio optimization
+        ii. risk assessment
+        iii. decision-making
+    g. time-varying models
+10. model development
