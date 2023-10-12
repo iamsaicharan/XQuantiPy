@@ -21,7 +21,7 @@ class Analysis(object):
         for i in macros:
             assert type(i).__name__ == "Macro", "Error: List must have macro objects"
         self.macros = macros
-    
+ 
     def get_merged_GDP(self, period=constants.PERIOD):
         """
         Summary:
@@ -36,13 +36,13 @@ class Analysis(object):
             returns the DataFrame with the merged GDP
         """
         if len(self.macros) == 1:
-            df = self.macros[0].get_GDP(period=period)
-            df.rename(columns={'GDP (current US$)': str(self.macros[0].country)}, inplace=True)
+            df = self.macros[0].get_macros(filters = ['GDP'], period=period)
+            df.rename(columns={'GDP': str(self.macros[0].country)}, inplace=True)
             return df
         data_list = []
         for i in self.macros:
-            df = i.get_GDP(period=period)
-            df.rename(columns={'GDP (current US$)': str(i.country)}, inplace=True)
+            df = i.get_macros(filters = ['GDP'], period=period)
+            df.rename(columns={'GDP': str(i.country)}, inplace=True)
             data_list.append(df)
         merged_df = data_list[0]
         for i in range(1, len(data_list)):

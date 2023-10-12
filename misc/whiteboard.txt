@@ -24,7 +24,6 @@ micro
     wbfetcher
 
 7. Visulization modules
-    - with multiple selection in gdp
 8. More comprehensive test cases with proper input values
 9. statistical analysis
     a. Correlation analysis
