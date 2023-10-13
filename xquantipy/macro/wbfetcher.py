@@ -28,7 +28,6 @@ class Wbfetcher:
         """
         dataframes = []
         for i in indicator:
-            print(i)
             base_url = "http://api.worldbank.org/v2/"
             if country_code != None:
                 base_url = base_url + "country/" + country_code + "/indicator/"
@@ -37,7 +36,6 @@ class Wbfetcher:
                 base_url = base_url + "?date=" + str(dates[1].year) + ":" + str(dates[0].year) + "&format=json"
             else:
                 raise Exception("Error: Wrong date format")
-            print(base_url)
             response = requests.get(base_url)
             json_data = response.json()
             data_list = json_data[1]

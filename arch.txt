@@ -1,0 +1,57 @@
+constants
+    constants.py
+    ============
+    Variables:
+        - RISK_FREE_RATE
+        - PERIOD
+        - BENCHMARK_INDEX
+        - INDICATOR
+
+macro
+    macro.py
+    ========
+    Macro(object):
+        Instance Variables:
+            - country
+        Methods:
+            - get_macros(self, filters = [], period = constants.PERIOD)
+    
+    wbfetcher.py
+    ============
+    Wbfetcher():
+        Methods:
+            - get_data(indicator, country_code, dates)
+
+    analysis.py 
+    ===========
+    Analysis(object):
+        Instance Variables:
+            - macros
+        Methods:
+            - get_merged_macro(self, filter = None, period=constants.PERIOD)
+            - visualize(self, filter=None, period=constants.PERIOD)
+
+ticker
+    ticker.py
+    =========
+    Ticker(object):
+        Instance Variables:
+            - stock
+            - period
+            - data
+            - fundamentals
+        Methods:
+            - get_adj_close(self)
+            - get_beta(self)
+            - get_alpha(self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
+
+    analysis.py
+    ===========
+    Analysis(object):
+        Instance Variables:
+            - tickers
+        Methods:
+            - show_alpha_vs_beta(self, index = constants.BENCHMARK_INDEX, risk_free_rate = constants.RISK_FREE_RATE)
+            - get_merged_adj_close(self)
+
+

@@ -39,7 +39,6 @@ class Macro(object):
                           'ENERGY_USE']
         for i in filters:
             indicators[constants.INDICATOR[i]] = i
-        print(indicators)
         country_code = self.country
         data = Wbfetcher.get_data(indicators, country_code, data_date)
         data = pd.DataFrame(data)

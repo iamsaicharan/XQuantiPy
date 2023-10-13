@@ -22,7 +22,7 @@ class Analysis(object):
             assert type(i).__name__ == "Macro", "Error: List must have macro objects"
         self.macros = macros
  
-    def get_merged_GDP(self, period=constants.PERIOD):
+    def get_merged_macro(self, filter = None, period=constants.PERIOD):
         """
         Summary:
         A method to get the merged gdp dataframe for the object macros
@@ -36,20 +36,20 @@ class Analysis(object):
             returns the DataFrame with the merged GDP
         """
         if len(self.macros) == 1:
-            df = self.macros[0].get_macros(filters = ['GDP'], period=period)
-            df.rename(columns={'GDP': str(self.macros[0].country)}, inplace=True)
+            df = self.macros[0].get_macros(filters = [filter], period=period)
+            df.rename(columns={str(filter): str(self.macros[0].country)}, inplace=True)
             return df
         data_list = []
         for i in self.macros:
-            df = i.get_macros(filters = ['GDP'], period=period)
-            df.rename(columns={'GDP': str(i.country)}, inplace=True)
+            df = i.get_macros(filters = [filter], period=period)
+            df.rename(columns={str(filter): str(i.country)}, inplace=True)
             data_list.append(df)
         merged_df = data_list[0]
         for i in range(1, len(data_list)):
             merged_df = pd.merge(merged_df, data_list[i], on='Date', how='outer')
         return merged_df
     
-    def visualize_GDP(self, period=constants.PERIOD):
+    def visualize(self, filter=None, period=constants.PERIOD):
         """
         Summary:
         A method to get visualization for gdp of the object macros
@@ -62,13 +62,13 @@ class Analysis(object):
         plt : module
             returns the object displays the matplotlib plot of the graph
         """
-        df = self.get_merged_GDP(period=period)
+        df = self.get_merged(filter = filter, period=period)
         df.set_index('Date', inplace=True)
         for column in df.columns:
             plt.plot(df.index, df[column], label=column)
-        plt.title('GDP Comparison')
+        plt.title(str(filter) + ' Comparison')
         plt.xlabel('Date')
-        plt.ylabel('GDP')
+        plt.ylabel(str(filter))
         plt.legend()
         plt.grid(True)
         plt.tight_layout() 
