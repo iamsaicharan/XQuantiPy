@@ -7,6 +7,13 @@ constants
         - BENCHMARK_INDEX
         - INDICATOR
 
+fetcher
+    fetcher.py
+    ==========
+    Fetcher:
+        Methods:
+            - get_data(indicator, country_code, dates)
+
 macro
     macro.py
     ========
@@ -18,7 +25,7 @@ macro
     
     wbfetcher.py
     ============
-    Wbfetcher():
+    Wbfetcher:
         Methods:
             - get_data(indicator, country_code, dates)
 

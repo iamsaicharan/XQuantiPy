@@ -4,6 +4,7 @@ import re
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 from xquantipy.macro.wbfetcher import Wbfetcher
+from xquantipy.fetcher.fetcher import Fetcher
 
 class Macro(object):
     """
@@ -30,18 +31,9 @@ class Macro(object):
         data_date = start, end
         indicators = {}
         if filters == []:
-            filters = ['GDP', 'GDP_GROWTH', 'GDP_PER_CAPITA', 
-                          'GDP_CURRENT_LCU', 'INFLATION', 'UNEMPLOYMENT', 
-                          'EXPORT', 'IMPORT', 'EXPORT_GROWTH', 
-                          'IMPORT_GROWTH', 'LABOR_FORCE', 'POPULATION', 
-                          'EXTERNAL_DEBT', 'EXTERNAL_DEBT_GNI', 
-                          'HEALTH_EXPENDITURE', 'EDUCATION_EXPENDITURE', 
-                          'ENERGY_USE']
+            filters = ['GDP']
         for i in filters:
-            indicators[constants.INDICATOR[i]] = i
+            indicators[constants.MACRO_INDICATORS[i]] = i
         country_code = self.country
-        data = Wbfetcher.get_data(indicators, country_code, data_date)
-        data = pd.DataFrame(data)
-        data.rename(columns={'date': 'Date'}, inplace=True)
-        data = data.iloc[::-1]
+        data = Fetcher.get_data(filters, country_code, data_date)
         return data
