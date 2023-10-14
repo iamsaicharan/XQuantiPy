@@ -46,7 +46,7 @@ class Analysis(object):
             data_list.append(df)
         merged_df = data_list[0]
         for i in range(1, len(data_list)):
-            merged_df = pd.merge(merged_df, data_list[i], on='Date', how='outer')
+            merged_df = pd.merge(merged_df, data_list[i], on='Year', how='outer')
         return merged_df
     
     def visualize(self, filter=None, period=constants.PERIOD):
@@ -62,12 +62,12 @@ class Analysis(object):
         plt : module
             returns the object displays the matplotlib plot of the graph
         """
-        df = self.get_merged(filter = filter, period=period)
-        df.set_index('Date', inplace=True)
+        df = self.get_merged_macro(filter = filter, period=period)
+        df.set_index('Year', inplace=True)
         for column in df.columns:
             plt.plot(df.index, df[column], label=column)
         plt.title(str(filter) + ' Comparison')
-        plt.xlabel('Date')
+        plt.xlabel('Year')
         plt.ylabel(str(filter))
         plt.legend()
         plt.grid(True)
