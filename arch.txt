@@ -6,6 +6,8 @@ constants
         - PERIOD
         - BENCHMARK_INDEX
         - INDICATOR
+        - MACRO_INDICATORS
+        - COUNTRY_CODES
 
 fetcher
     fetcher.py
@@ -13,6 +15,7 @@ fetcher
     Fetcher:
         Methods:
             - get_data(indicator, country_code, dates)
+            - convert_to_numeric(self, value)
 
 macro
     macro.py

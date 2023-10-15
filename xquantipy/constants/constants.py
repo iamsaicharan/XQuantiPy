@@ -31,6 +31,14 @@ MACRO_INDICATORS = {
     'GNP': 'gnp-gross-national-product',
     'INFLATION': 'inflation-rate-cpi',
     'MANUFACTURING': 'manufacturing-output',
+    'POPULATION': 'population',
+    'HEALTHCARE_SPENDING': 'healthcare-spending',
+    'POVERTY_RATE': 'poverty-rate',
+    'UNEMPLOYMENT': 'unemployment-rate',
+    'CRIME_RATE': 'crime-rate-statistics',
+    'MILITARY_SPENDING': 'military-spending-defense-budget',
+    'MILITARY_SIZE': 'military-army-size',
+    'ARABLE_LAND': 'arable-land',
 }
 
 COUNTRY_CODES = {

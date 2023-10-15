@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from xquantipy.constants.constants import COUNTRY_CODES, MACRO_INDICATORS
+import numpy as np
 
 class Fetcher:
     """
@@ -13,7 +14,7 @@ class Fetcher:
         gets the selected macroeconomic data from macrotrends.net
     """
 
-    def get_data(indicators, country_code, dates):
+    def get_data(self, indicators, country_code, dates):
         """
         Summary:
         Method to retrive data from macrotrends.net
@@ -52,8 +53,11 @@ class Fetcher:
                         datas.append(data)
                 data = {'Year': years, str(i): datas}
                 df = pd.DataFrame(data)
+                df.replace('', np.nan, inplace=True)
+                df = df.dropna()
                 df['Year'] = df['Year'].astype(int)
                 df = df[(df['Year'] >= dates[1].year) & (df['Year'] <= dates[0].year)]
+                df[str(i)] = df[str(i)].apply(self._convert_to_numeric)
                 dfs.append(df)   
         if len(dfs) == 1:
             return dfs[0]            
@@ -61,3 +65,12 @@ class Fetcher:
         for i in dfs[1:]:
             merged_df = pd.merge(merged_df, i, on='Year', how='outer')
         return merged_df
+    
+    def _convert_to_numeric(self, value):
+        value = value.replace('$', '').replace('%', '').replace(',', '')
+        if 'M' in value:
+            return float(value.replace('M', '')) * 1e6
+        elif 'B' in value:
+            return float(value.replace('B', '')) * 1e9
+        else:
+            return float(value)

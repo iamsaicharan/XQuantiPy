@@ -35,5 +35,5 @@ class Macro(object):
         for i in filters:
             indicators[constants.MACRO_INDICATORS[i]] = i
         country_code = self.country
-        data = Fetcher.get_data(filters, country_code, data_date)
+        data = Fetcher().get_data(filters, country_code, data_date)
         return data
