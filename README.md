@@ -56,3 +56,42 @@ GDP_COMPARE_DF = Countries.get_merged_macro('GDP')
 # Visualize GDP data for the Countries
 Countries.visualize("GDP").show()
 ```
+
+### ticker module
+
+The `Ticker` module helps to get the ticker data:
+
+```python
+from xquantipy.ticker.ticker import Ticker
+
+# Get AAPL object with default period of "10Y"
+AAPL = Ticker('AAPL')
+# Get GE object with period of "15Y"
+GE = Ticker('GE', period='15Y')
+
+# Get stock data with Date, Open, High, Low, Close, Adj Close, Volume, daily_return, cum_return
+AAPL_DF = AAPL.data
+# Get stock fundamental data in a dictionary format
+AAPL_FUNDAMENTALS = AAPL.fundamentals
+
+# Get Beta value of the stock
+GE_BETA = GE.get_beta()
+# Get Alpha value of the stock compared to default index "^GSPC"
+GE_ALPHA = GE.get_alpha()
+```
+
+The `Analysis` module helps for analyzing ticker data:
+
+```python
+from xquantipy.ticker.ticker import Ticker
+from xquantipy.ticker.analysis import Analysis
+
+AAPL = Ticker('AAPL')
+GE = Ticker('GE')
+AAPL_GE = Analysis([AAPL, GE])
+
+# Get merged dataframes containing adj close values
+AAPL_GE_DF = AAPL_GE.get_merged_adj_close()
+# Visualize alpha vs beta values compared for the stocks
+AAPL_GE.show_alpha_vs_beta().show()
+```
