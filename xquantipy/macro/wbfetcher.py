@@ -26,6 +26,9 @@ class Wbfetcher:
         data : pandas dataframe
             returns dataframe which represents macroeconomic data for a indicator, period
         """
+        assert type(indicator) == dict, "Error: Invalid indicators type"
+        assert type(country_code) == str, "Error: Invalid country code type"
+        assert type(dates) == set, "Error: Invalid dates type"
         dataframes = []
         for i in indicator:
             base_url = "http://api.worldbank.org/v2/"

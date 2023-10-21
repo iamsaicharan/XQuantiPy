@@ -23,8 +23,8 @@ class Macro(object):
         self.country = country
     
     def get_macros(self, filters = [], period = constants.PERIOD):
-        assert type(filters) == list, "Error: filters must be a list"
-        assert type(period) == str, "Error: invalid entry for the period"
+        assert type(filters) == list, "Error: Invalid filters type"
+        assert type(period) == str, "Error: Invalid entry for the period"
         pattern = r'\d+'
         number = re.search(pattern, period)
         period_int = int(number.group())

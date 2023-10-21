@@ -31,6 +31,9 @@ class Fetcher:
         data : pandas dataframe
             returns dataframe which represents macroeconomic data for indicators, period
         """
+        assert type(indicators) == list, "Error: Invalid indicators type"
+        assert type(country_code) == str, "Error: Invalid country code type"
+        assert type(dates) == set, "Error: Invalid dates type"
         dfs = []
         for i in indicators:
             base_url = "http://www.macrotrends.net/countries/"

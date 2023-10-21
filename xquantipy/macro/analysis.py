@@ -28,6 +28,8 @@ class Analysis(object):
         A method to get the merged gdp dataframe for the object macros
 
         Parameters:
+        filter : str
+            a string for filter
         period : str
             a string for period: "10Y"
 
@@ -35,6 +37,8 @@ class Analysis(object):
         merged_df : DataFrame
             returns the DataFrame with the merged GDP
         """
+        assert type(filter) == str, "Error: Invalid filter type"
+        assert type(period) == str, "Error: Invalid period type"
         if len(self.macros) == 1:
             df = self.macros[0].get_macros(filters = [filter], period=period)
             df.rename(columns={str(filter): str(self.macros[0].country)}, inplace=True)
@@ -62,6 +66,8 @@ class Analysis(object):
         plt : module
             returns the object displays the matplotlib plot of the graph
         """
+        assert type(filter) == str, "Error: Invalid filter type"
+        assert type(period) == str, "Error: Invalid period type"
         df = self.get_merged_macro(filter = filter, period=period)
         df.set_index('Year', inplace=True)
         for column in df.columns:

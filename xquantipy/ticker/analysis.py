@@ -38,7 +38,7 @@ class Analysis(object):
         plt : module
             returns the object displays the matplotlib plot of the graph
         """
-        assert type(index) == str, "Error: index argument must be string"
+        assert type(index) == str, "Error: index argument argument must be string"
         assert type(risk_free_rate) == float, "Error: risk_free_rate argument must be float"
         data = {}
         for ticker in self.tickers:
