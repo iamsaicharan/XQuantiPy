@@ -2,6 +2,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import xquantipy.constants.constants as constants
+import plotly.express as px
+import plotly.graph_objects as go
 
 class Analysis(object):
     """
@@ -45,21 +47,22 @@ class Analysis(object):
             data[ticker.stock] = [ticker.get_alpha(index), ticker.get_beta()]
         labels, points = zip(*data.items())
         x, y = zip(*points)
-        plt.figure(figsize=(8, 6))
-        plt.axhline(1, color='black',linewidth=2)
-        plt.axvline(0, color='black',linewidth=2)
-        plt.scatter(x, y, marker='o', s=100)
-        for i, label in enumerate(labels):
-            plt.annotate(label, (x[i], y[i]), textcoords="offset points", xytext=(0,10), ha='center')
-        plt.text(2, 1.1, 'High Return - High Risk', fontsize=7, ha='center', va='center')
-        plt.text(2, 0.9, 'High Return - Low Risk', fontsize=7, ha='center', va='center')
-        plt.text(-2, 1.1, 'Low Return - High Risk', fontsize=7, ha='center', va='center')
-        plt.text(-2, 0.9, 'Low Return - Low Risk', fontsize=7, ha='center', va='center')
-        plt.title('Alpha vs Beta')
-        plt.xlabel('Alpha')
-        plt.ylabel('Beta')
-        plt.grid(True)
-        return plt
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=x,y=y,mode="markers+text",text=labels,textposition="top center",marker=dict(size=10),hoverinfo="text",))
+        fig.add_hline(1, line_color="black", line_width=2)
+        fig.add_vline(0, line_color="black", line_width=2)
+        fig.update_layout(
+            title="Alpha vs Beta",
+            xaxis_title="Alpha",
+            yaxis_title="Beta",
+            annotations=[
+                dict(x=2,y=1.1,text="High Return - High Risk",font_size=15),
+                dict(x=2,y=0.9,text="High Return - Low Risk",font_size=15),
+                dict(x=-2,y=1.1,text="Low Return - High Risk",font_size=15),
+                dict(x=-2,y=0.9,text="Low Return - Low Risk",font_size=15),
+            ],
+        )
+        return fig
     
     def get_merged_adj_close(self):
         """
@@ -77,5 +80,21 @@ class Analysis(object):
             merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
         return merged_dfs
         
+    def show_ticker_adj_close_chart(self):
+        """
+        Summary:
+        A method to plot the adj close comparison of the stocks
+
+        Return:
+        plt : module
+            returns the object displays the plotly plot of the graph
+        """
+        merged_dfs = self.tickers[0].get_adj_close()
+        if len(self.tickers) == 1:
+            return px.line(merged_dfs.set_index('Date'))
+        for i in range(1, len(self.tickers)):
+            merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
+        fig = px.line(merged_dfs.set_index('Date'))
+        return fig
 
     
