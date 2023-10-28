@@ -10,8 +10,8 @@ class Analysis(object):
     A class to perform the analysis on tickers
     ...
     Attributes:
-    tickers : list
-        list of stock ticker objects
+    tickers : list/ticker object
+        Input can be a list of stock ticker objects or one stock ticker object
 
     Methods:
     show_alpha_vs_beta(self)
@@ -19,16 +19,22 @@ class Analysis(object):
         of the stocks listed
     """
     def __init__(self, tickers):
-        assert type(tickers) == list, "Error: Please insert list of ticker objects as arguments"
-        assert len(tickers) > 0, "Error: Empty list of ticker objects as arguments"
-        for i in tickers:
-            assert type(i).__name__ == "Ticker", "Error: List must have ticker objects"
-        self.tickers = tickers
+        if type(tickers) == list and len(tickers) > 0:
+            for i in tickers:
+                assert type(i).__name__ == "Ticker", "Error: List must have ticker objects"
+            self.tickers = tickers
+        else:
+            assert type(tickers).__name__ == "Ticker", "Error: Argument passed must be a ticker object"
+            self.tickers = tickers
 
     def show_alpha_vs_beta(self, index = constants.BENCHMARK_INDEX, risk_free_rate = constants.RISK_FREE_RATE):
         """
         Summary:
         A method to plot the alpha vs beta comparison of the stocks
+
+        Restrictions:
+        This method only works for the object with a list of stock ticker objects
+        Does not work for a particular stock ticker with one stock ticker object argument passed
 
         Parameters:
         index : str
@@ -40,6 +46,7 @@ class Analysis(object):
         plt : module
             returns the object displays the matplotlib plot of the graph
         """
+        assert type(self.tickers) == list, "Error: show_alpha_vs_beta works for a list of tickers object"
         assert type(index) == str, "Error: index argument argument must be string"
         assert type(risk_free_rate) == float, "Error: risk_free_rate argument must be float"
         data = {}
@@ -73,12 +80,15 @@ class Analysis(object):
         merged_dfs : DataFrame
             returns the dataframe with adj close value of the tickers
         """
-        if len(self.tickers) == 1:
-            return self.tickers[0].get_adj_close()
-        merged_dfs = self.tickers[0].get_adj_close()
-        for i in range(1, len(self.tickers)):
-            merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
-        return merged_dfs
+        if type(self.tickers) == list:
+            if len(self.tickers) == 1:
+                return self.tickers[0].get_adj_close()
+            merged_dfs = self.tickers[0].get_adj_close()
+            for i in range(1, len(self.tickers)):
+                merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
+            return merged_dfs
+        else:
+            return self.tickers.get_adj_close()
         
     def show_ticker_adj_close_chart(self):
         """
@@ -89,12 +99,15 @@ class Analysis(object):
         plt : module
             returns the object displays the plotly plot of the graph
         """
-        merged_dfs = self.tickers[0].get_adj_close()
-        if len(self.tickers) == 1:
-            return px.line(merged_dfs.set_index('Date'))
-        for i in range(1, len(self.tickers)):
-            merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
-        fig = px.line(merged_dfs.set_index('Date'))
-        return fig
+        if type(self.tickers) == list:
+            merged_dfs = self.tickers[0].get_adj_close()
+            if len(self.tickers) == 1:
+                return px.line(merged_dfs.set_index('Date'))
+            for i in range(1, len(self.tickers)):
+                merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
+            fig = px.line(merged_dfs.set_index('Date'))
+            return fig
+        else:
+            df = self.tickers.get_adj_close()
+            return px.line(df.set_index('Date'))
 
-    
