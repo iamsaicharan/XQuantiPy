@@ -111,3 +111,37 @@ class Analysis(object):
             df = self.tickers.get_adj_close()
             return px.line(df.set_index('Date'))
 
+    def show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD]):
+        """
+        Summary:
+        A method to plot the moving comparison of the particular stock analysis objects
+
+        Restrictions:
+        This method only works for the object with a single stock ticker objects
+        Does not work for a list of stock tickers with one stock ticker object argument passed
+
+        Parameters:
+        period : list
+            a list of period to which moving average is calculated
+
+        Return:
+        plt : module
+            returns the object displays the matplotlib plot of the graph
+        """
+        assert type(self.tickers).__name__ == 'Ticker', 'Error: Object should contain a single ticker object not list'
+        df = self.tickers.get_adj_close()
+        for i in period:
+            df[str('MA_' + str(i))] = df[self.tickers.stock].rolling(window=i).mean()
+        columns = list(df.columns)
+        columns.pop(0)
+        columns.pop(0)
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df[self.tickers.stock], mode='lines', name='Closing Price'))
+        for i in columns:
+            fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
+        fig.update_layout(title=f'{self.tickers.stock} Stock Price with {period}-Day Moving Average',
+                        xaxis_title='Date',
+                        yaxis_title='Price',
+                        showlegend=True)
+        return fig
+
