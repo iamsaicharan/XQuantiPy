@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import xquantipy.constants.constants as constants
 import copy
+import plotly.graph_objects as go
 
 class Ticker(object):
     """
@@ -93,6 +94,35 @@ class Ticker(object):
         simple_return_stock = (stock_end_value - stock_start_value)/stock_start_value
         alpha = simple_return_stock - (risk_free_rate + self.get_beta()*(simple_return_index - risk_free_rate))
         return float(alpha)
+    
+    def show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD]):
+        """
+        Summary:
+        A method to plot the moving comparison of the particular stock analysis objects
+
+        Parameters:
+        period : list
+            a list of period to which moving average is calculated
+
+        Return:
+        plt : module
+            returns the object displays the matplotlib plot of the graph
+        """
+        df = self.get_adj_close()
+        for i in period:
+            df[str('MA_' + str(i))] = df[self.stock].rolling(window=i).mean()
+        columns = list(df.columns)
+        columns.pop(0)
+        columns.pop(0)
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
+        for i in columns:
+            fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
+        fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day Moving Average',
+                        xaxis_title='Date',
+                        yaxis_title='Price',
+                        showlegend=True)
+        return fig
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]

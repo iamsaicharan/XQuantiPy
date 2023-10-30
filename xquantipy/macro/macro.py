@@ -3,7 +3,6 @@ import datetime
 import re
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-from xquantipy.macro.wbfetcher import Wbfetcher
 from xquantipy.fetcher.fetcher import Fetcher
 
 class Macro(object):

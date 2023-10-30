@@ -19,22 +19,15 @@ class Analysis(object):
         of the stocks listed
     """
     def __init__(self, tickers):
-        if type(tickers) == list and len(tickers) > 0:
-            for i in tickers:
-                assert type(i).__name__ == "Ticker", "Error: List must have ticker objects"
-            self.tickers = tickers
-        else:
-            assert type(tickers).__name__ == "Ticker", "Error: Argument passed must be a ticker object"
-            self.tickers = tickers
+        assert type(tickers) == list, "Error: must be a list of ticker objects"
+        for i in tickers:
+            assert type(i).__name__ == "Ticker", "Error: List must have ticker objects"
+        self.tickers = tickers
 
     def show_alpha_vs_beta(self, index = constants.BENCHMARK_INDEX, risk_free_rate = constants.RISK_FREE_RATE):
         """
         Summary:
         A method to plot the alpha vs beta comparison of the stocks
-
-        Restrictions:
-        This method only works for the object with a list of stock ticker objects
-        Does not work for a particular stock ticker with one stock ticker object argument passed
 
         Parameters:
         index : str
@@ -80,17 +73,14 @@ class Analysis(object):
         merged_dfs : DataFrame
             returns the dataframe with adj close value of the tickers
         """
-        if type(self.tickers) == list:
-            if len(self.tickers) == 1:
-                return self.tickers[0].get_adj_close()
-            merged_dfs = self.tickers[0].get_adj_close()
-            for i in range(1, len(self.tickers)):
-                merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
-            return merged_dfs
-        else:
-            return self.tickers.get_adj_close()
+        if len(self.tickers) == 1:
+            return self.tickers[0].get_adj_close()
+        merged_dfs = self.tickers[0].get_adj_close()
+        for i in range(1, len(self.tickers)):
+            merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
+        return merged_dfs
         
-    def show_ticker_adj_close_chart(self):
+    def show_merged_adj_close_chart(self):
         """
         Summary:
         A method to plot the adj close comparison of the stocks
@@ -99,49 +89,10 @@ class Analysis(object):
         plt : module
             returns the object displays the plotly plot of the graph
         """
-        if type(self.tickers) == list:
-            merged_dfs = self.tickers[0].get_adj_close()
-            if len(self.tickers) == 1:
-                return px.line(merged_dfs.set_index('Date'))
-            for i in range(1, len(self.tickers)):
-                merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
-            fig = px.line(merged_dfs.set_index('Date'))
-            return fig
-        else:
-            df = self.tickers.get_adj_close()
-            return px.line(df.set_index('Date'))
-
-    def show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD]):
-        """
-        Summary:
-        A method to plot the moving comparison of the particular stock analysis objects
-
-        Restrictions:
-        This method only works for the object with a single stock ticker objects
-        Does not work for a list of stock tickers with one stock ticker object argument passed
-
-        Parameters:
-        period : list
-            a list of period to which moving average is calculated
-
-        Return:
-        plt : module
-            returns the object displays the matplotlib plot of the graph
-        """
-        assert type(self.tickers).__name__ == 'Ticker', 'Error: Object should contain a single ticker object not list'
-        df = self.tickers.get_adj_close()
-        for i in period:
-            df[str('MA_' + str(i))] = df[self.tickers.stock].rolling(window=i).mean()
-        columns = list(df.columns)
-        columns.pop(0)
-        columns.pop(0)
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=df['Date'], y=df[self.tickers.stock], mode='lines', name='Closing Price'))
-        for i in columns:
-            fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
-        fig.update_layout(title=f'{self.tickers.stock} Stock Price with {period}-Day Moving Average',
-                        xaxis_title='Date',
-                        yaxis_title='Price',
-                        showlegend=True)
+        merged_dfs = self.tickers[0].get_adj_close()
+        if len(self.tickers) == 1:
+            return px.line(merged_dfs.set_index('Date'))
+        for i in range(1, len(self.tickers)):
+            merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
+        fig = px.line(merged_dfs.set_index('Date'))
         return fig
-

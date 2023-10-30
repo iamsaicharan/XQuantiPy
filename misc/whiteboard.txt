@@ -8,22 +8,31 @@
     1. write the testing code
     2. write own wbdate module
 
-constants
-    __init__.py
-    constants
-
-ticker
-    __init__.py
-    ticker
-    analysis
-
-micro
-    __init__.py
-    micro
-    analysis
-    wbfetcher
-
 7. Visulization modules
+    Moving Average (MA)
+    Exponential Moving Average (EMA)
+    Moving Average Convergence Divergence (MACD)
+    Parabolic SAR (PSAR)
+    Bollinger Bands
+    Average Directional Index (ADX)
+    Stochastic Oscillator
+    Relative Strength Index (RSI)
+    Rate of Change (ROC)
+    On-Balance Volume (OBV)
+    Accumulation/Distribution Line (A/D)
+    Commodity Channel Index (CCI)
+    On-Balance Volume (OBV)
+    Accumulation/Distribution Line (A/D)
+    Chaikin Money Flow (CMF)
+    Volume Profile
+    Average Daily Trading Volume
+    Average True Range (ATR)
+    Bollinger Bands
+    Keltner Channels
+    Fibonacci Retracement
+    Elliott Waves
+    Ichimoku Cloud
+
 8. More comprehensive test cases with proper input values
 9. statistical analysis
     a. Correlation analysis

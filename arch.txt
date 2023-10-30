@@ -4,8 +4,8 @@ constants
     Variables:
         - RISK_FREE_RATE
         - PERIOD
+        - MOVING_AVERAGE_PERIOD
         - BENCHMARK_INDEX
-        - INDICATOR
         - MACRO_INDICATORS
         - COUNTRY_CODES
 
@@ -15,7 +15,7 @@ fetcher
     Fetcher:
         Methods:
             - get_data(indicator, country_code, dates)
-            - convert_to_numeric(self, value)
+            - _convert_to_numeric(self, value)
 
 macro
     macro.py
@@ -25,12 +25,6 @@ macro
             - country
         Methods:
             - get_macros(self, filters = [], period = constants.PERIOD)
-    
-    wbfetcher.py
-    ============
-    Wbfetcher:
-        Methods:
-            - get_data(indicator, country_code, dates)
 
     analysis.py 
     ===========
@@ -54,6 +48,7 @@ ticker
             - get_adj_close(self)
             - get_beta(self)
             - get_alpha(self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
+            - show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD])
 
     analysis.py
     ===========
@@ -63,5 +58,6 @@ ticker
         Methods:
             - show_alpha_vs_beta(self, index = constants.BENCHMARK_INDEX, risk_free_rate = constants.RISK_FREE_RATE)
             - get_merged_adj_close(self)
+            - show_merged_adj_close_chart(self)
 
 
