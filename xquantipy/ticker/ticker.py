@@ -3,6 +3,9 @@ import pandas as pd
 import xquantipy.constants.constants as constants
 import copy
 import plotly.graph_objects as go
+import numpy as np
+import statsmodels.api as sm
+
 
 class Ticker(object):
     """
@@ -15,7 +18,7 @@ class Ticker(object):
         period selected for the data default: "10Y"
     data : Dataframe
         timeseries daily data of the stock
-    fundamentals : dict
+    fundamentals : dict -> DISCONTINUED DUE TO YAHOO FINANCE
         fundamental data of the stock
 
     Methods:
@@ -36,7 +39,7 @@ class Ticker(object):
         data['daily_return'] = (data['Adj Close'] - data['Adj Close'].shift(1)) / data['Adj Close'].shift(1)
         data['cum_return'] = (1+data['daily_return']).cumprod()-1
         self.data = data
-        self.fundamentals = yf.Ticker(ticker).info
+        # self.fundamentals = yf.Ticker(ticker).info
 
     def get_adj_close(self):
         """
@@ -51,7 +54,7 @@ class Ticker(object):
         adj_close.rename(columns={'Adj Close': str(self.stock)}, inplace=True)
         return adj_close
 
-    def get_beta(self):
+    def get_beta(self, index = constants.BENCHMARK_INDEX):
         """
         Summary:
         A method to calculate the beta value of the stock
@@ -62,7 +65,16 @@ class Ticker(object):
         beta : float
             return value which represents the beta of the stock
         """
-        return self.fundamentals['beta']
+        index_data = yf.download(index, period=self.period)
+        index_data.reset_index(inplace=True)
+        stock_returns = self.data['Adj Close'].pct_change().dropna()
+        market_returns = index_data['Adj Close'].pct_change().dropna()
+        data = pd.DataFrame({'Stock': stock_returns, 'Market': market_returns}).dropna()
+        X = sm.add_constant(data['Market'])  # Add a constant for the intercept
+        Y = data['Stock']
+        model = sm.OLS(Y, X).fit()
+        beta = model.params['Market']
+        return round(beta, 2)
 
     def get_alpha(self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE):
         """
