@@ -2,6 +2,8 @@ RISK_FREE_RATE = 0.05
 PERIOD = "10Y"
 MOVING_AVERAGE_PERIOD = 20
 BENCHMARK_INDEX = "^GSPC"
+BASE_OPTIONS_URL = "https://query2.finance.yahoo.com/v7/finance/options/"
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
 
 MACRO_INDICATORS = {
     'GDP': 'gdp-gross-domestic-product',

@@ -5,6 +5,8 @@ import copy
 import plotly.graph_objects as go
 import numpy as np
 import statsmodels.api as sm
+import requests
+import json
 
 
 class Ticker(object):
@@ -39,7 +41,15 @@ class Ticker(object):
         data['daily_return'] = (data['Adj Close'] - data['Adj Close'].shift(1)) / data['Adj Close'].shift(1)
         data['cum_return'] = (1+data['daily_return']).cumprod()-1
         self.data = data
-        # self.fundamentals = yf.Ticker(ticker).info
+        url = constants.BASE_OPTIONS_URL + str(self.stock)
+        print(url)
+        response = requests.get(url=url, headers=constants.HEADERS)
+        if response.status_code == 200:
+            data = json.loads(response.content)
+            self.fundamentals = data['optionChain']['result'][0]['quote']
+        else:
+            print('Error fetching fundamental data:', response.status_code)
+            self.fundamentals = {}
 
     def get_adj_close(self):
         """
