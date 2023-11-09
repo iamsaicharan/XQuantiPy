@@ -7,7 +7,6 @@
 6. Get economic data
     1. write the testing code
     2. write own wbdate module
-* Problem with yfianance module with info method
 7. Visulization modules
     Moving Average (MA)
     Exponential Moving Average (EMA)
