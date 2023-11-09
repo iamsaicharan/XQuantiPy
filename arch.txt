@@ -6,6 +6,8 @@ constants
         - PERIOD
         - MOVING_AVERAGE_PERIOD
         - BENCHMARK_INDEX
+        - BASE_OPTIONS_URL
+        - HEADERS
         - MACRO_INDICATORS
         - COUNTRY_CODES
 
