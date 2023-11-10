@@ -34,10 +34,6 @@ class Analysis(object):
             a string for the bench mark index default: ^GSPC
         risk_free_rate : float
             value of the risk free return value default: 0.05 i.e. 5%
-
-        Return:
-        plt : module
-            returns the object displays the matplotlib plot of the graph
         """
         assert type(self.tickers) == list, "Error: show_alpha_vs_beta works for a list of tickers object"
         assert type(index) == str, "Error: index argument argument must be string"
@@ -62,7 +58,7 @@ class Analysis(object):
                 dict(x=-2,y=0.9,text="Low Return - Low Risk",font_size=15),
             ],
         )
-        return fig
+        fig.show()
     
     def get_merged_adj_close(self):
         """
@@ -84,10 +80,6 @@ class Analysis(object):
         """
         Summary:
         A method to plot the adj close comparison of the stocks
-
-        Return:
-        plt : module
-            returns the object displays the plotly plot of the graph
         """
         merged_dfs = self.tickers[0].get_adj_close()
         if len(self.tickers) == 1:
@@ -95,4 +87,4 @@ class Analysis(object):
         for i in range(1, len(self.tickers)):
             merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
         fig = px.line(merged_dfs.set_index('Date'))
-        return fig
+        fig.show()
