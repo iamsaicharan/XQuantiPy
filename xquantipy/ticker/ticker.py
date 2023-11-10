@@ -42,7 +42,6 @@ class Ticker(object):
         data['cum_return'] = (1+data['daily_return']).cumprod()-1
         self.data = data
         url = constants.BASE_OPTIONS_URL + str(self.stock)
-        print(url)
         response = requests.get(url=url, headers=constants.HEADERS)
         if response.status_code == 200:
             data = json.loads(response.content)
@@ -127,10 +126,6 @@ class Ticker(object):
             can be simple or exponential moving average
         period : list
             a list of period to which moving average is calculated
-
-        Return:
-        plt : module
-            returns the object displays the matplotlib plot of the graph
         """
         df = self.get_adj_close()
         label = ''
@@ -151,11 +146,34 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
         for i in columns:
             fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
-        fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day {label} Moving Average',
-                        xaxis_title='Date',
-                        yaxis_title='Price',
-                        showlegend=True)
-        return fig
+        fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day {label} Moving Average', xaxis_title='Date', yaxis_title='Price', showlegend=True)
+        fig.show()
+    
+    def show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9):
+        """
+        Summary:
+        A method to plot the moving average convergence divergence (MACD) of the particular stock analysis objects
+
+        Parameters:
+        fastperiod : int
+            fast period for the calculation
+        slowperiod : int
+            slow period for the calculation
+        signalperiod : int
+            signal period for the calculation
+        """
+        df = self.get_adj_close()
+        EMAfast = df[self.stock].ewm(span=fastperiod, min_periods=fastperiod).mean()
+        EMAslow = df[self.stock].ewm(span=slowperiod, min_periods=slowperiod).mean()
+        MACD = EMAfast - EMAslow
+        signal = MACD.ewm(span=signalperiod, min_periods=signalperiod).mean()
+        MACDhist = MACD - signal
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'],y=MACD,mode='lines', name='MACD'))
+        fig.add_trace(go.Scatter(x=df['Date'],y=signal,mode='lines', name='Signal'))
+        fig.add_trace(go.Bar(x=df['Date'],y=signal, name='MACD Histogram'))
+        fig.update_layout(title="MACD", xaxis_title="Date", yaxis_title="MACD")
+        fig.show()
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
