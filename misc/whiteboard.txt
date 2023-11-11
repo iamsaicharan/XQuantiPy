@@ -31,7 +31,6 @@
     Fibonacci Retracement
     Elliott Waves
     Ichimoku Cloud
-
 8. More comprehensive test cases with proper input values
 9. statistical analysis
     a. Correlation analysis
