@@ -1,12 +1,4 @@
-1. Get Ticker data with daily and cum_return
-2. Get beta value method
-3. Get alpha value method
-4. alpha vs beta graph analysis
-    class Analysis -> Attributes stocks list with ticker object
-5. In the alpha vs beta graph make it properly formated in 4 quadrants
-6. Get economic data
-    1. write the testing code
-    2. write own wbdate module
+
 7. Visulization modules
     Moving Average (MA)
     Exponential Moving Average (EMA)
