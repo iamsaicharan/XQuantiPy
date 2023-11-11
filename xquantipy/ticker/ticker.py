@@ -174,6 +174,64 @@ class Ticker(object):
         fig.add_trace(go.Bar(x=df['Date'],y=signal, name='MACD Histogram'))
         fig.update_layout(title="MACD", xaxis_title="Date", yaxis_title="MACD")
         fig.show()
+    
+    def show_parabolic_sar(self, af=0.02, max_af=0.2):
+        """
+        Summary:
+        A method to plot the Parabolic SAR of the particular stock analysis objects
+
+        Parameters:
+        af : int
+            acceleration factor for the calculation
+        max_af : int
+            max acceleration factor for the calculation
+        """
+        psar_values = []
+        initial_psar = self.data.High[0]
+        trend = 'up'
+        af = 0.02
+        new_psar = initial_psar
+        extreme_point = self.data.High[0]
+        for i in range(1, len(self.data)):
+            current_close = self.data.Close[i]
+            current_high = self.data.High[i]
+            current_low = self.data.Low[i]
+            if trend == 'up':
+                if current_high > extreme_point:
+                    extreme_point = current_high
+                    af = min(af + 0.02, max_af)
+                else:
+                    new_psar = initial_psar + af * (extreme_point - initial_psar)
+                    new_psar = max(new_psar, min(current_high, current_low))
+
+                if current_low < new_psar:
+                    trend = 'down'
+                    initial_psar = current_low
+                    af = 0.02
+                    extreme_point = current_low
+                else:
+                    initial_psar = new_psar
+            else:
+                if current_low < extreme_point:
+                    extreme_point = current_low
+                    af = min(af + 0.02, max_af)
+                else:
+                    new_psar = initial_psar - af * (initial_psar - extreme_point)
+                    new_psar = max(new_psar, min(current_high, current_low))
+
+                if current_high > new_psar:
+                    trend = 'up'
+                    initial_psar = current_high
+                    af = 0.02
+                    extreme_point = current_high
+                else:
+                    initial_psar = new_psar
+            psar_values.append(new_psar)
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=self.data.Date, y=psar_values, name="PSAR"))
+        fig.add_trace(go.Scatter(x=self.data.Date, y=self.data.Close, name="Close Price"))
+        fig.update_layout(title="PSAR and Close Price", xaxis_title="Date", yaxis_title="Price")
+        fig.show()
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
