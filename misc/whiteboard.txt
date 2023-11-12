@@ -1,10 +1,4 @@
-
-7. Visulization modules
-    Moving Average (MA)
-    Exponential Moving Average (EMA)
-    Moving Average Convergence Divergence (MACD)
-    Parabolic SAR (PSAR)
-    Bollinger Bands
+* Visulization modules
     Average Directional Index (ADX)
     Stochastic Oscillator
     Relative Strength Index (RSI)
@@ -23,8 +17,8 @@
     Fibonacci Retracement
     Elliott Waves
     Ichimoku Cloud
-8. More comprehensive test cases with proper input values
-9. statistical analysis
+* More comprehensive test cases with proper input values
+* statistical analysis
     a. Correlation analysis
     b. regression analysis
     c. time series analysis
@@ -47,4 +41,4 @@
         ii. risk assessment
         iii. decision-making
     g. time-varying models
-10. model development
+* model development
