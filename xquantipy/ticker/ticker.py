@@ -232,6 +232,26 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=self.data.Date, y=self.data.Close, name="Close Price"))
         fig.update_layout(title="PSAR and Close Price", xaxis_title="Date", yaxis_title="Price")
         fig.show()
+    
+    def show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD):
+        """
+        Summary:
+        A method to plot the bollinger band of the particular stock analysis objects
+
+        Parameters:
+        period : int
+            period for the calculation
+        """
+        moving_average = self.data['Close'].rolling(window=period).mean()
+        standard_deviation = self.data['Close'].rolling(window=period).std()
+        upper_band = moving_average + 2 * standard_deviation
+        lower_band = moving_average - 2 * standard_deviation
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=self.data['Date'], y=self.data['Close'], name='Close Price'))
+        fig.add_trace(go.Scatter(x=self.data['Date'], y=upper_band, name='Upper Bollinger Band'))
+        fig.add_trace(go.Scatter(x=self.data['Date'], y=lower_band, name='Lower Bollinger Band'))
+        fig.update_layout(title='Bollinger Bands of a Stock', xaxis_title='Date', yaxis_title='Price')
+        fig.show()
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
