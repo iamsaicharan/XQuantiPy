@@ -10,9 +10,9 @@ To test:
 
 """
 import yfinance as yf
-from xquantipy.ticker.ticker import Ticker
-from xquantipy.ticker.analysis import Analysis
-from xquantipy.macro.macro import Macro
+from xquantipy.stocks.ticker import Ticker
+from xquantipy.stocks.analysis import Analysis
+from xquantipy.economics.macro import Macro
 import pytest
 
 test_tickers = ['AAPL', 'MSFT']

@@ -1,9 +1,9 @@
-import xquantipy.constants.constants as constants
+import constants as constants
 import datetime
 import re
 import pandas as pd
 from dateutil.relativedelta import relativedelta
-from xquantipy.fetcher.fetcher import Fetcher
+from xquantipy.fetcher.scraper import Fetcher
 
 class Macro(object):
     """
