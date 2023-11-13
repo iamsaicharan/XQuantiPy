@@ -1,6 +1,6 @@
 import yfinance as yf
 import pandas as pd
-import constants as constants
+import xquantipy.constants as constants
 import copy
 import plotly.graph_objects as go
 import numpy as np

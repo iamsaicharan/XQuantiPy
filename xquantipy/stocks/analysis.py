@@ -1,7 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import constants as constants
+import xquantipy.constants as constants
 import plotly.express as px
 import plotly.graph_objects as go
 

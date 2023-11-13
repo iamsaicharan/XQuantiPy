@@ -1,7 +1,7 @@
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
-import constants as constants
+import xquantipy.constants as constants
 
 class Analysis(object):
     """

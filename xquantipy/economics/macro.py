@@ -1,4 +1,4 @@
-import constants as constants
+import xquantipy.constants as constants
 import datetime
 import re
 import pandas as pd

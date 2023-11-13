@@ -2,7 +2,7 @@ import pipreqs
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from constants import COUNTRY_CODES, MACRO_INDICATORS
+from xquantipy.constants import COUNTRY_CODES, MACRO_INDICATORS
 import numpy as np
 
 class Fetcher:
