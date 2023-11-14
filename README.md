@@ -12,11 +12,18 @@ pip install xquantipy
 
 ### Requirements
 
+* beautifulsoup4==4.12.2
 * matplotlib==3.8.0
-* pandas==2.1.1
+* numpy==1.26.1
+* pandas==2.1.2
+* pipreqs==0.4.13
+* plotly==5.18.0
+* pytest==7.4.0
 * python_dateutil==2.8.2
 * Requests==2.31.0
 * seaborn==0.13.0
+* setuptools==68.0.0
+* statsmodels==0.14.0
 * yfinance==0.2.29
 
 ## Get Started
@@ -95,3 +102,11 @@ AAPL_GE_DF = AAPL_GE.get_merged_adj_close()
 # Visualize alpha vs beta values compared for the stocks
 AAPL_GE.show_alpha_vs_beta().show()
 ```
+
+## Contributing
+
+Want to help build XQuantiPy? Check out our [CONTRIBUTING.md](CONTRIBUTING.md)
+
+## License
+
+[Project Name] is licensed under the MIT License. Please read the LICENSE: [LICENSE.md](LICENSE.md) file for more information.
