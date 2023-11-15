@@ -33,7 +33,7 @@ pip install xquantipy
 The `Macro` module helps to get the macro economic data:
 
 ```python
-from xquantipy.macro.macro import Macro
+from xquantipy.economics.macro import Macro
 
 USA = Macro("USA")
 IND = Macro("IND")
@@ -52,7 +52,7 @@ IND_GDP_GROWTH = IND.get_macros(filters=['GDP_GROWTH', 'GNI'], period='15Y')
 The `Analysis` module helps to get the macro economic analysis and visualization:
 
 ```python
-from xquantipy.macro.analysis import Analysis
+from xquantipy.economics.analysis import Analysis
 
 USA = Macro("USA")
 IND = Macro("IND")
@@ -69,7 +69,7 @@ Countries.visualize("GDP").show()
 The `Ticker` module helps to get the ticker data:
 
 ```python
-from xquantipy.ticker.ticker import Ticker
+from xquantipy.stocks.ticker import Ticker
 
 # Get AAPL object with default period of "10Y"
 AAPL = Ticker('AAPL')
@@ -90,8 +90,8 @@ GE_ALPHA = GE.get_alpha()
 The `Analysis` module helps for analyzing ticker data:
 
 ```python
-from xquantipy.ticker.ticker import Ticker
-from xquantipy.ticker.analysis import Analysis
+from xquantipy.stocks.ticker import Ticker
+from xquantipy.stocks.analysis import Analysis
 
 AAPL = Ticker('AAPL')
 GE = Ticker('GE')

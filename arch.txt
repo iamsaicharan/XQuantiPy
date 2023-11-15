@@ -1,25 +1,24 @@
-constants
-    constants.py
-    ============
-    Variables:
-        - RISK_FREE_RATE
-        - PERIOD
-        - MOVING_AVERAGE_PERIOD
-        - BENCHMARK_INDEX
-        - BASE_OPTIONS_URL
-        - HEADERS
-        - MACRO_INDICATORS
-        - COUNTRY_CODES
+constants.py
+============
+Variables:
+    - RISK_FREE_RATE
+    - PERIOD
+    - MOVING_AVERAGE_PERIOD
+    - BENCHMARK_INDEX
+    - BASE_OPTIONS_URL
+    - HEADERS
+    - MACRO_INDICATORS
+    - COUNTRY_CODES
 
 fetcher
-    fetcher.py
+    scraper.py
     ==========
     Fetcher:
         Methods:
             - get_data(indicator, country_code, dates)
             - _convert_to_numeric(self, value)
 
-macro
+economics
     macro.py
     ========
     Macro(object):
@@ -37,7 +36,7 @@ macro
             - get_merged_macro(self, filter = None, period=constants.PERIOD)
             - visualize(self, filter=None, period=constants.PERIOD)
 
-ticker
+stocks
     ticker.py
     =========
     Ticker(object):
@@ -51,6 +50,9 @@ ticker
             - get_beta(self)
             - get_alpha(self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
             - show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD])
+            - show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9)
+            - show_parabolic_sar(self, af=0.02, max_af=0.2)
+            - show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD)
 
     analysis.py
     ===========
