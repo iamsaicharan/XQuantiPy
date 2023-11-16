@@ -70,6 +70,18 @@ class Fetcher:
         return merged_df
     
     def _convert_to_numeric(self, value):
+        """
+        Summary:
+        Method to convert the Currency to Numeric values
+
+        Parameters:
+        value : str
+            a str which represents the currrency
+
+        Return:
+        float value : float
+            returns a float value of the converted currency
+        """
         value = value.replace('$', '').replace('%', '').replace(',', '')
         if 'M' in value:
             return float(value.replace('M', '')) * 1e6
