@@ -116,6 +116,32 @@ class Ticker(object):
         alpha = simple_return_stock - (risk_free_rate + self.get_beta()*(simple_return_index - risk_free_rate))
         return float(alpha)
     
+    def get_moving_average(self, type='simple', period = [constants.MOVING_AVERAGE_PERIOD]):
+        """
+        Summary:
+        A method to get the moving average of the particular stock analysis objects
+
+        Parameters:
+        type : str
+            can be simple or exponential moving average
+        period : list
+            a list of period to which moving average is calculated
+
+        Returns:
+        df : Dataframe
+            a Dataframe of the stock with moving average
+        """
+        df = self.get_adj_close()
+        if type == 'simple':
+            for i in period:
+                df[str('MA_' + str(i))] = df[self.stock].rolling(window=i).mean()
+        elif type == 'exponential':
+            for i in period:
+                df[str('EMA_' + str(i))] = df[self.stock].ewm(span=i, adjust=False).mean()
+        else:
+            raise Exception("type should be simple or exponential")
+        return df
+
     def show_moving_average(self, type='simple', period = [constants.MOVING_AVERAGE_PERIOD]):
         """
         Summary:
@@ -127,18 +153,7 @@ class Ticker(object):
         period : list
             a list of period to which moving average is calculated
         """
-        df = self.get_adj_close()
-        label = ''
-        if type == 'simple':
-            label = 'Simple'
-            for i in period:
-                df[str('MA_' + str(i))] = df[self.stock].rolling(window=i).mean()
-        elif type == 'exponential':
-            label = 'Exponential'
-            for i in period:
-                df[str('EMA_' + str(i))] = df[self.stock].ewm(span=i, adjust=False).mean()
-        else:
-            raise Exception("type should be simple or exponential")
+        df = self.get_moving_average(type, period)
         columns = list(df.columns)
         columns.pop(0)
         columns.pop(0)
@@ -146,7 +161,7 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
         for i in columns:
             fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
-        fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day {label} Moving Average', xaxis_title='Date', yaxis_title='Price', showlegend=True)
+        fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day {type} Moving Average', xaxis_title='Date', yaxis_title='Price', showlegend=True)
         fig.show()
     
     def show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9):
