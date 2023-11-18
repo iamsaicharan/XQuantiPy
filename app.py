@@ -21,6 +21,21 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(html_template.format(
                 stock.to_html()
             ).encode())
+        
+        if parsed_url.path == '/ma':
+            query_params = parse_qs(parsed_url.query)
+            period = int(query_params.get('ma_period')[0])
+            symbol = query_params.get('symbol')[0]
+            ma_type = query_params.get('type')[0]
+            ma = Ticker(symbol).show_moving_average(type=ma_type, period=[period])
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            with open('templates/index.html', 'r') as template_file:
+                html_template = template_file.read()
+            self.wfile.write(html_template.format(
+                ma.to_html()
+            ).encode())
 
     def get_stock_data(self, stock_symbol):
         stock = yf.download(stock_symbol)
