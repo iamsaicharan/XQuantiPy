@@ -26,10 +26,20 @@ class Ticker(object):
     Methods:
     get_adj_close(self)
         returns a adj close dataframe for the ticker
+    show_adj_close(self)
+        plot adj close for the ticker
     get_beta(self)
         gets the beta value of the ticker object
     get_alpha(Self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
         gets the alpha value of the ticker object
+    show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD])
+        get the moving average of the particular stock analysis objects
+    show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9)
+        plot the moving average convergence divergence (MACD) of the particular stock analysis objects
+    show_parabolic_sar(self, af=0.02, max_af=0.2)
+        plot the Parabolic SAR of the particular stock analysis objects
+    show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD)
+        plot the bollinger band of the particular stock analysis objects
     """
     def __init__(self, ticker, period = constants.PERIOD):
         assert type(ticker) == str, "Error: ticker argument must be a string"
@@ -62,6 +72,22 @@ class Ticker(object):
         adj_close = copy.deepcopy(self.data[['Date', 'Adj Close']])
         adj_close.rename(columns={'Adj Close': str(self.stock)}, inplace=True)
         return adj_close
+    
+    def show_adj_close(self):
+        """
+        Summary:
+        A method to plot adj close column which is renamed to the self.stock name
+
+        Return:
+        fig : module
+            return value which represents the matplotlib figure with adj close column
+        """
+        df = self.get_adj_close()
+        print(df)
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
+        fig.update_layout(title=f'{self.stock} Stock Price', xaxis_title='Date', yaxis_title=('Adj Close ' + str(self.stock)), showlegend=True)
+        return fig
 
     def get_beta(self, index = constants.BENCHMARK_INDEX):
         """
@@ -152,6 +178,10 @@ class Ticker(object):
             can be simple or exponential moving average
         period : list
             a list of period to which moving average is calculated
+
+        Return:
+        fig : matplotlib
+            a figure object represents moving average
         """
         df = self.get_moving_average(type, period)
         columns = list(df.columns)
@@ -162,7 +192,7 @@ class Ticker(object):
         for i in columns:
             fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
         fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day {type} Moving Average', xaxis_title='Date', yaxis_title='Price', showlegend=True)
-        fig.show()
+        return fig
     
     def show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9):
         """
@@ -176,6 +206,10 @@ class Ticker(object):
             slow period for the calculation
         signalperiod : int
             signal period for the calculation
+        
+        Return:
+        fig : matplotlib
+            a figure object represents moving average convergence divergence
         """
         df = self.get_adj_close()
         EMAfast = df[self.stock].ewm(span=fastperiod, min_periods=fastperiod).mean()
@@ -188,7 +222,7 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=df['Date'],y=signal,mode='lines', name='Signal'))
         fig.add_trace(go.Bar(x=df['Date'],y=signal, name='MACD Histogram'))
         fig.update_layout(title="MACD", xaxis_title="Date", yaxis_title="MACD")
-        fig.show()
+        return fig
     
     def show_parabolic_sar(self, af=0.02, max_af=0.2):
         """
@@ -200,6 +234,10 @@ class Ticker(object):
             acceleration factor for the calculation
         max_af : int
             max acceleration factor for the calculation
+
+        Return:
+        fig : matplotlib
+            a figure object represents parabolic SAR
         """
         psar_values = []
         initial_psar = self.data.High[0]
@@ -246,7 +284,7 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=self.data.Date, y=psar_values, name="PSAR"))
         fig.add_trace(go.Scatter(x=self.data.Date, y=self.data.Close, name="Close Price"))
         fig.update_layout(title="PSAR and Close Price", xaxis_title="Date", yaxis_title="Price")
-        fig.show()
+        return fig
     
     def show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD):
         """
@@ -256,6 +294,10 @@ class Ticker(object):
         Parameters:
         period : int
             period for the calculation
+
+        Return:
+        fig : matplotlib
+            a figure object represents bollinger band
         """
         moving_average = self.data['Close'].rolling(window=period).mean()
         standard_deviation = self.data['Close'].rolling(window=period).std()
@@ -266,7 +308,7 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=self.data['Date'], y=upper_band, name='Upper Bollinger Band'))
         fig.add_trace(go.Scatter(x=self.data['Date'], y=lower_band, name='Lower Bollinger Band'))
         fig.update_layout(title='Bollinger Bands of a Stock', xaxis_title='Date', yaxis_title='Price')
-        fig.show()
+        return fig
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]

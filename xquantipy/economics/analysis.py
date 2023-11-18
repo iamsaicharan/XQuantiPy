@@ -14,6 +14,8 @@ class Analysis(object):
     Methods:
     get_merged_GDP(self, period=constants.PERIOD)
         get the merged GDP data for the object macros
+    visualize(self, filter=None, period=constants.PERIOD)
+        get visualization for gdp of the object macros
     """
     def __init__(self, macros):
         assert type(macros) == list, "Error: Please insert list of macros objects as arguments"

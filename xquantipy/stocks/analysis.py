@@ -17,6 +17,10 @@ class Analysis(object):
     show_alpha_vs_beta(self)
         plots a graph between alpha values and beta values
         of the stocks listed
+    get_merged_adj_close(self)
+        get merge all the data with adj close values in the tickers list
+    show_merged_adj_close_chart(self)
+        plot the adj close comparison of the stocks
     """
     def __init__(self, tickers):
         assert type(tickers) == list, "Error: must be a list of ticker objects"
@@ -34,6 +38,10 @@ class Analysis(object):
             a string for the bench mark index default: ^GSPC
         risk_free_rate : float
             value of the risk free return value default: 0.05 i.e. 5%
+        
+        Return:
+        fig : matplotlib
+            a figure object represents alpha vs beta
         """
         assert type(self.tickers) == list, "Error: show_alpha_vs_beta works for a list of tickers object"
         assert type(index) == str, "Error: index argument argument must be string"
@@ -58,7 +66,7 @@ class Analysis(object):
                 dict(x=-2,y=0.9,text="Low Return - Low Risk",font_size=15),
             ],
         )
-        fig.show()
+        return fig
     
     def get_merged_adj_close(self):
         """
@@ -80,6 +88,10 @@ class Analysis(object):
         """
         Summary:
         A method to plot the adj close comparison of the stocks
+
+        Return:
+        fig : matplotlib
+            a figure object represents merged adj close chart
         """
         merged_dfs = self.tickers[0].get_adj_close()
         if len(self.tickers) == 1:
@@ -87,4 +99,4 @@ class Analysis(object):
         for i in range(1, len(self.tickers)):
             merged_dfs = pd.merge(merged_dfs, self.tickers[i].get_adj_close(), on='Date', how='outer')
         fig = px.line(merged_dfs.set_index('Date'))
-        fig.show()
+        return fig
