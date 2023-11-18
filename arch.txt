@@ -47,6 +47,7 @@ stocks
             - fundamentals
         Methods:
             - get_adj_close(self)
+            - show_adj_close(self)
             - get_beta(self)
             - get_alpha(self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)
             - show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD])
