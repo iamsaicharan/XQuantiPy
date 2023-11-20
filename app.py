@@ -13,14 +13,20 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             query_params = parse_qs(parsed_url.query)
             stock_symbol = query_params.get('symbol')[0]
             stock = Ticker(stock_symbol).show_adj_close()
+            with open('templates/home.html', 'r', encoding='utf-8') as template_file:
+                html_template = template_file.read()
+            variables = {
+                'stock': stock_symbol,
+                'plot': stock.to_html(),
+            }
+            for variable, value in variables.items():
+                placeholder = "{{" + variable + "}}"
+                print(placeholder)
+                html_template = html_template.replace(placeholder, value)
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            with open('templates/index.html', 'r') as template_file:
-                html_template = template_file.read()
-            self.wfile.write(html_template.format(
-                stock.to_html()
-            ).encode())
+            self.wfile.write(html_template.encode('utf-8'))
         
         if parsed_url.path == '/ma':
             query_params = parse_qs(parsed_url.query)
@@ -34,7 +40,8 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             with open('templates/index.html', 'r') as template_file:
                 html_template = template_file.read()
             self.wfile.write(html_template.format(
-                ma.to_html()
+                plot=ma.to_html(),
+                test=None
             ).encode())
 
     def get_stock_data(self, stock_symbol):
