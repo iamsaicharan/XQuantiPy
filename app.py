@@ -21,28 +21,39 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             }
             for variable, value in variables.items():
                 placeholder = "{{" + variable + "}}"
-                print(placeholder)
                 html_template = html_template.replace(placeholder, value)
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             self.wfile.write(html_template.encode('utf-8'))
         
-        if parsed_url.path == '/ma':
+        if parsed_url.path == '/stocks':
             query_params = parse_qs(parsed_url.query)
-            period = int(query_params.get('ma_period')[0])
+            print(query_params)
+            period = query_params.get('ma_period')
+            period_list = []
+            for item in period:
+                if ',' in item:
+                    period_list.extend(item.split(','))
+                else:
+                    period_list.append(item)
+            period_list = [int(item) for item in period_list]
             symbol = query_params.get('symbol')[0]
             ma_type = query_params.get('type')[0]
-            ma = Ticker(symbol).show_moving_average(type=ma_type, period=[period])
+            ma = Ticker(symbol).show_moving_average(type=ma_type, period=period_list)
+            with open('templates/home.html', 'r') as template_file:
+                html_template = template_file.read()
+            variables = {
+                'stock': symbol,
+                'plot': ma.to_html(),
+            }
+            for variable, value in variables.items():
+                placeholder = "{{" + variable + "}}"
+                html_template = html_template.replace(placeholder, value)
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            with open('templates/index.html', 'r') as template_file:
-                html_template = template_file.read()
-            self.wfile.write(html_template.format(
-                plot=ma.to_html(),
-                test=None
-            ).encode())
+            self.wfile.write(html_template.encode('utf-8'))
 
     def get_stock_data(self, stock_symbol):
         stock = yf.download(stock_symbol)

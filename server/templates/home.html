@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+
+<body>
+<h1>XQuantiPy - <span id="tickerName", type="text">{{stock}}</span></h1>
+<label for="options">Select an option:</label>
+<select id="options" onchange="updateFilters()">
+    <option value="default">Select an option</option>
+    <option value="ma">Moving Average</option>
+    <option value="macd">Moving Average Convergence Divergence</option>
+</select>
+<div id="filterContainer" style="display: none;">
+    <label for="filter1">Filter 1:</label>
+    <input type="text" id="filter1" name="filter1">
+    <label for="filter2">Filter 2:</label>
+    <input type="text" id="filter2" name="filter2">
+</div>
+<div id="filterContainerMa" style="display: none;">
+    <label for="maPeriods">Periods:</label>
+    <input type="text" id="maPeriods" name="periods">
+    <label for="filter2">Type:</label>
+    <input type="text" id="maType" name="type">
+</div>
+<button onclick="submitFilters()">Submit</button>
+<div>
+    {{plot}}
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script>
+    function updateFilters() {
+        var selectedOption = document.getElementById("options").value;
+        var filterContainerMa = document.getElementById("filterContainerMa");
+        filterContainerMa.style.display = "none";
+        for (var i = 1; i <= 2; i++) {
+            document.getElementById("filter" + i).value = "";
+        }
+        if (selectedOption === "ma") {
+            filterContainerMa.style.display = "block";
+            document.getElementById("maPeriods").placeholder = "Enter Periods for MA ex: 20,30,40";
+            document.getElementById("maType").placeholder = "Enter Type of MA - Simple or Exponential";
+        } else if (selectedOption === "macd") {
+            filterContainer.style.display = "block";
+            document.getElementById("filter1").placeholder = "Enter filter for Option 2";
+            document.getElementById("filter2").placeholder = "Enter another filter for Option 2";
+        }
+    }
+    function submitFilters() {
+        var selectedOption = document.getElementById("options").value;
+        if (selectedOption === "ma") {
+            var maPeriodsValue = encodeURIComponent(document.getElementById("maPeriods").value);
+            var maType = encodeURIComponent(document.getElementById("maType").value);
+            var ticker = encodeURIComponent(document.getElementById("tickerName").textContent);
+            var url = "/stocks?symbol=" + ticker + "&type=" + maType + "&ma_period=" + maPeriodsValue
+            window.location.href = url;
+        }
+    }
+</script>
+</html>
