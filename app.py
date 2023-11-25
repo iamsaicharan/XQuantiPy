@@ -30,19 +30,20 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
         if parsed_url.path == '/stocks':
             query_params = parse_qs(parsed_url.query)
             filter_type = query_params.get('indicators')
-            print(filter_type)
+            symbol = query_params.get('symbol')[0]
+            period = query_params.get('period')[0]
+            print(query_params)
             if 'moving_average' in filter_type:
-                period = query_params.get('ma_period')
+                ma_period = query_params.get('ma_period')
                 period_list = []
-                for item in period:
+                for item in ma_period:
                     if ',' in item:
                         period_list.extend(item.split(','))
                     else:
                         period_list.append(item)
                 period_list = [int(item) for item in period_list]
-                symbol = query_params.get('symbol')[0]
                 ma_type = query_params.get('type')[0]
-                ma = Ticker(symbol).show_moving_average(type=ma_type, period=period_list)
+                ma = Ticker(symbol, period=period).show_moving_average(type=ma_type, period=period_list)
                 with open('server/templates/home.html', 'r') as template_file:
                     html_template = template_file.read()
                 variables = {

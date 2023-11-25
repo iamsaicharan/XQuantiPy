@@ -14,6 +14,8 @@
 <div>
     <label for="stock_symbol">Stock symbol:</label>
     <input type="text" id="stock_symbol" name="stock_symbol">
+    <label for="stock_period">Stock period:</label>
+    <input type="text" id="stock_period" name="stock_period">
 </div>
 <label for="options">Select an option:</label>
 <select id="options" onchange="updateFilters()">
@@ -57,8 +59,12 @@
             var maPeriodsValue = encodeURIComponent(document.getElementById("maPeriods").value);
             var maType = encodeURIComponent(document.getElementById("maType").value);
             var ticker = encodeURIComponent(document.getElementById("stock_symbol").value);
-            var url = "/stocks?indicators=" + selectedOption + "&symbol=" + ticker + "&type=" + maType + "&ma_period=" + maPeriodsValue
+            var period = encodeURIComponent(document.getElementById("stock_period").value);
+            var url = "/stocks?symbol=" + ticker + "&period=" + period + "&indicators=" + selectedOption + "&type=" + maType + "&ma_period=" + maPeriodsValue
+            // var url = "/stocks?indicators=" + selectedOption + "&symbol=" + ticker + "&type=" + maType + "&ma_period=" + maPeriodsValue
             window.location.href = url;
+        } else if (selectedOption === "default") {
+
         }
     }
 </script>
