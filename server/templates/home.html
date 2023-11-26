@@ -55,16 +55,16 @@
     }
     function submitFilters() {
         var selectedOption = document.getElementById("options").value;
+        var ticker = encodeURIComponent(document.getElementById("stock_symbol").value);
+        var period = encodeURIComponent(document.getElementById("stock_period").value);
         if (selectedOption === "moving_average") {
             var maPeriodsValue = encodeURIComponent(document.getElementById("maPeriods").value);
             var maType = encodeURIComponent(document.getElementById("maType").value);
-            var ticker = encodeURIComponent(document.getElementById("stock_symbol").value);
-            var period = encodeURIComponent(document.getElementById("stock_period").value);
             var url = "/stocks?symbol=" + ticker + "&period=" + period + "&indicators=" + selectedOption + "&type=" + maType + "&ma_period=" + maPeriodsValue
-            // var url = "/stocks?indicators=" + selectedOption + "&symbol=" + ticker + "&type=" + maType + "&ma_period=" + maPeriodsValue
             window.location.href = url;
         } else if (selectedOption === "default") {
-
+            var url = "/stocks?symbol=" + ticker + "&period=" + period
+            window.location.href = url;
         }
     }
 </script>

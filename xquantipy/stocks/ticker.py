@@ -83,7 +83,6 @@ class Ticker(object):
             return value which represents the matplotlib figure with adj close column
         """
         df = self.get_adj_close()
-        print(df)
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
         fig.update_layout(title=f'{self.stock} Stock Price', xaxis_title='Date', yaxis_title=('Adj Close ' + str(self.stock)), showlegend=True)
