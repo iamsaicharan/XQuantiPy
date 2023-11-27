@@ -28,7 +28,7 @@ pip install xquantipy
 * statsmodels==0.14.0
 * yfinance==0.2.29
 
-## Get Started
+## Get started as python module
 
 ### macro module
 
@@ -104,6 +104,24 @@ AAPL_GE_DF = AAPL_GE.get_merged_adj_close()
 # Visualize alpha vs beta values compared for the stocks
 AAPL_GE.show_alpha_vs_beta().show()
 ```
+
+## Get started as stand-alone
+
+Clone the repository using the following command
+
+```bash
+git clone https://github.com/iamsaicharan/XQuantiPy.git
+```
+
+Once cloned go into the project directory, install the requirements folder and run app.py
+
+```bash
+cd XQuantiPy
+pip3 install -r requirements.txt
+python3 app.py
+```
+
+This should start the web server in localhost in default port
 
 ## Contributing
 
