@@ -1,4 +1,6 @@
-# XQuantiPy
+# XQuantiPy - Financial Analysis
+
+![Alt Text](xQuantipy.png)
 
 xquantipy is a python module for downloading macro economic data & stock data with the modules included for the analysis.
 
