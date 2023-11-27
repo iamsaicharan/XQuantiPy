@@ -64,7 +64,9 @@ class Analysis(object):
                 dict(x=2,y=0.9,text="High Return - Low Risk",font_size=15),
                 dict(x=-2,y=1.1,text="Low Return - High Risk",font_size=15),
                 dict(x=-2,y=0.9,text="Low Return - Low Risk",font_size=15),
-            ],
+            ], 
+            template='plotly_dark',
+            
         )
         return fig
     
