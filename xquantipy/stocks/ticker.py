@@ -85,7 +85,13 @@ class Ticker(object):
         df = self.get_adj_close()
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
-        fig.update_layout(title=f'{self.stock} Stock Price', xaxis_title='Date', yaxis_title=('Adj Close ' + str(self.stock)), showlegend=True)
+        fig.update_layout(
+            title=f'{self.stock} Stock Price', 
+            xaxis_title='Date', 
+            yaxis_title=('Adj Close ' + str(self.stock)), 
+            showlegend=True, 
+            template='plotly_dark',
+            )
         return fig
 
     def get_beta(self, index = constants.BENCHMARK_INDEX):
@@ -190,7 +196,12 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=df['Date'], y=df[self.stock], mode='lines', name='Closing Price'))
         for i in columns:
             fig.add_trace(go.Scatter(x=df['Date'], y=df[i], mode='lines', name=f'{i}'))
-        fig.update_layout(title=f'{self.stock} Stock Price with {period}-Day {type} Moving Average', xaxis_title='Date', yaxis_title='Price', showlegend=True)
+        fig.update_layout(
+            title=f'{self.stock} Stock Price with {period}-Day {type} Moving Average', 
+            xaxis_title='Date', 
+            yaxis_title='Price', 
+            showlegend=True,
+            template='plotly_dark',)
         return fig
     
     def show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9):
@@ -220,7 +231,12 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=df['Date'],y=MACD,mode='lines', name='MACD'))
         fig.add_trace(go.Scatter(x=df['Date'],y=signal,mode='lines', name='Signal'))
         fig.add_trace(go.Bar(x=df['Date'],y=signal, name='MACD Histogram'))
-        fig.update_layout(title="MACD", xaxis_title="Date", yaxis_title="MACD")
+        fig.update_layout(
+            title="MACD", 
+            xaxis_title="Date", 
+            yaxis_title="MACD", 
+            template='plotly_dark',
+            )
         return fig
     
     def show_parabolic_sar(self, af=0.02, max_af=0.2):
@@ -282,7 +298,12 @@ class Ticker(object):
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=self.data.Date, y=psar_values, name="PSAR"))
         fig.add_trace(go.Scatter(x=self.data.Date, y=self.data.Close, name="Close Price"))
-        fig.update_layout(title="PSAR and Close Price", xaxis_title="Date", yaxis_title="Price")
+        fig.update_layout(
+            title="PSAR and Close Price", 
+            xaxis_title="Date", 
+            yaxis_title="Price", 
+            template='plotly_dark',
+            )
         return fig
     
     def show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD):
@@ -306,7 +327,12 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=self.data['Date'], y=self.data['Close'], name='Close Price'))
         fig.add_trace(go.Scatter(x=self.data['Date'], y=upper_band, name='Upper Bollinger Band'))
         fig.add_trace(go.Scatter(x=self.data['Date'], y=lower_band, name='Lower Bollinger Band'))
-        fig.update_layout(title='Bollinger Bands of a Stock', xaxis_title='Date', yaxis_title='Price')
+        fig.update_layout(
+            title='Bollinger Bands of a Stock', 
+            xaxis_title='Date', 
+            yaxis_title='Price', 
+            template='plotly_dark',
+            )
         return fig
 
     def __str__(self):
