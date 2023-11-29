@@ -13,12 +13,31 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             query_params = parse_qs(parsed_url.query)
             stock_symbol = query_params.get('symbol')[0]
             stock = Ticker(stock_symbol).show_adj_close()
-            with open('server/templates/home.html', 'r', encoding='utf-8') as template_file:
+            with open('server/templates/stocks.html', 'r', encoding='utf-8') as template_file:
                 html_template = template_file.read()
             variables = {
                 'stock': stock_symbol,
                 'plot': stock.to_html(),
             }
+            for variable, value in variables.items():
+                placeholder = "{{" + variable + "}}"
+                html_template = html_template.replace(placeholder, value)
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write(html_template.encode('utf-8'))
+
+        if parsed_url.path == '/economics':
+            query_params = parse_qs(parsed_url.query)
+            if query_params == {}:
+                country = 'Welcome'
+                chart = ''
+            variables = {
+                'country': country,
+                'plot': chart,
+            }
+            with open('server/templates/economics.html', 'r') as template_file:
+                html_template = template_file.read()
             for variable, value in variables.items():
                 placeholder = "{{" + variable + "}}"
                 html_template = html_template.replace(placeholder, value)
@@ -57,7 +76,7 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
                 'stock': symbol,
                 'plot': chart,
             }
-            with open('server/templates/home.html', 'r') as template_file:
+            with open('server/templates/stocks.html', 'r') as template_file:
                 html_template = template_file.read()
             for variable, value in variables.items():
                 placeholder = "{{" + variable + "}}"
