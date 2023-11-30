@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>xquantipy.stocks package &#8212; XQuantiPy  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="xquantipy.fetcher package" href="xquantipy.fetcher.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="xquantipy-stocks-package">
+<h1>xquantipy.stocks package<a class="headerlink" href="#xquantipy-stocks-package" title="Link to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-xquantipy.stocks.analysis">
+<span id="xquantipy-stocks-analysis-module"></span><h2>xquantipy.stocks.analysis module<a class="headerlink" href="#module-xquantipy.stocks.analysis" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="xquantipy.stocks.analysis.Analysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xquantipy.stocks.analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tickers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/analysis.html#Analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.analysis.Analysis" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to perform the analysis on tickers
+…
+Attributes:
+tickers : list/ticker object</p>
+<blockquote>
+<div><p>Input can be a list of stock ticker objects or one stock ticker object</p>
+</div></blockquote>
+<p>Methods:
+show_alpha_vs_beta(self)</p>
+<blockquote>
+<div><p>plots a graph between alpha values and beta values
+of the stocks listed</p>
+</div></blockquote>
+<dl class="simple">
+<dt>get_merged_adj_close(self)</dt><dd><p>get merge all the data with adj close values in the tickers list</p>
+</dd>
+<dt>show_merged_adj_close_chart(self)</dt><dd><p>plot the adj close comparison of the stocks</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.analysis.Analysis.get_merged_adj_close">
+<span class="sig-name descname"><span class="pre">get_merged_adj_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/analysis.html#Analysis.get_merged_adj_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.analysis.Analysis.get_merged_adj_close" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to merge all the data with adj close values in the tickers list</p>
+<p>Return:
+merged_dfs : DataFrame</p>
+<blockquote>
+<div><p>returns the dataframe with adj close value of the tickers</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.analysis.Analysis.show_alpha_vs_beta">
+<span class="sig-name descname"><span class="pre">show_alpha_vs_beta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/analysis.html#Analysis.show_alpha_vs_beta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.analysis.Analysis.show_alpha_vs_beta" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot the alpha vs beta comparison of the stocks</p>
+<p>Parameters:
+index : str</p>
+<blockquote>
+<div><p>a string for the bench mark index default: ^GSPC</p>
+</div></blockquote>
+<dl class="simple">
+<dt>risk_free_rate<span class="classifier">float</span></dt><dd><p>value of the risk free return value default: 0.05 i.e. 5%</p>
+</dd>
+</dl>
+<p>Return:
+fig : matplotlib</p>
+<blockquote>
+<div><p>a figure object represents alpha vs beta</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.analysis.Analysis.show_merged_adj_close_chart">
+<span class="sig-name descname"><span class="pre">show_merged_adj_close_chart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/analysis.html#Analysis.show_merged_adj_close_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.analysis.Analysis.show_merged_adj_close_chart" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot the adj close comparison of the stocks</p>
+<p>Return:
+fig : matplotlib</p>
+<blockquote>
+<div><p>a figure object represents merged adj close chart</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-xquantipy.stocks.ticker">
+<span id="xquantipy-stocks-ticker-module"></span><h2>xquantipy.stocks.ticker module<a class="headerlink" href="#module-xquantipy.stocks.ticker" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xquantipy.stocks.ticker.</span></span><span class="sig-name descname"><span class="pre">Ticker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ticker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'10Y'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to represent a stock object
+…
+Attributes:
+stock : str</p>
+<blockquote>
+<div><p>stock ticker name</p>
+</div></blockquote>
+<dl class="simple">
+<dt>period<span class="classifier">str</span></dt><dd><p>period selected for the data default: “10Y”</p>
+</dd>
+<dt>data<span class="classifier">Dataframe</span></dt><dd><p>timeseries daily data of the stock</p>
+</dd>
+<dt>fundamentals<span class="classifier">dict -&gt; DISCONTINUED DUE TO YAHOO FINANCE</span></dt><dd><p>fundamental data of the stock</p>
+</dd>
+</dl>
+<p>Methods:
+get_adj_close(self)</p>
+<blockquote>
+<div><p>returns a adj close dataframe for the ticker</p>
+</div></blockquote>
+<dl class="simple">
+<dt>show_adj_close(self)</dt><dd><p>plot adj close for the ticker</p>
+</dd>
+<dt>get_beta(self)</dt><dd><p>gets the beta value of the ticker object</p>
+</dd>
+<dt>get_alpha(Self, index = constants.BENCHMARK_INDEX, risk_free_rate=constants.RISK_FREE_RATE)</dt><dd><p>gets the alpha value of the ticker object</p>
+</dd>
+<dt>show_moving_average(self, period = [constants.MOVING_AVERAGE_PERIOD])</dt><dd><p>get the moving average of the particular stock analysis objects</p>
+</dd>
+<dt>show_moving_average_convergence_divergence(self, fastperiod=12, slowperiod=26, signalperiod=9)</dt><dd><p>plot the moving average convergence divergence (MACD) of the particular stock analysis objects</p>
+</dd>
+<dt>show_parabolic_sar(self, af=0.02, max_af=0.2)</dt><dd><p>plot the Parabolic SAR of the particular stock analysis objects</p>
+</dd>
+<dt>show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD)</dt><dd><p>plot the bollinger band of the particular stock analysis objects</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.get_adj_close">
+<span class="sig-name descname"><span class="pre">get_adj_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.get_adj_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.get_adj_close" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to get only the adj close column which is renamed to the self.stock name</p>
+<p>Return:
+adj_close : dataframe</p>
+<blockquote>
+<div><p>return value which represents the dataframe with adj close column</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.get_alpha">
+<span class="sig-name descname"><span class="pre">get_alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">risk_free_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.get_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.get_alpha" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to calculate the alpha value of the stock which is a measure
+to find how a stock is beating a benchmark</p>
+<p>Parameters:
+index : str</p>
+<blockquote>
+<div><p>a string for the bench mark index default: ^GSPC</p>
+</div></blockquote>
+<dl class="simple">
+<dt>risk_free_rate<span class="classifier">float</span></dt><dd><p>value of the risk free return value default: 0.05 i.e. 5%</p>
+</dd>
+</dl>
+<p>Return:
+alpha : float</p>
+<blockquote>
+<div><p>return value which represents the alpha of the stock</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.get_beta">
+<span class="sig-name descname"><span class="pre">get_beta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'^GSPC'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.get_beta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.get_beta" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to calculate the beta value of the stock
+this value measures the expected move in a stock relative
+to movements in the overall market</p>
+<p>Return:
+beta : float</p>
+<blockquote>
+<div><p>return value which represents the beta of the stock</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.get_moving_average">
+<span class="sig-name descname"><span class="pre">get_moving_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'simple'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.get_moving_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.get_moving_average" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to get the moving average of the particular stock analysis objects</p>
+<p>Parameters:
+type : str</p>
+<blockquote>
+<div><p>can be simple or exponential moving average</p>
+</div></blockquote>
+<dl class="simple">
+<dt>period<span class="classifier">list</span></dt><dd><p>a list of period to which moving average is calculated</p>
+</dd>
+</dl>
+<p>Returns:
+df : Dataframe</p>
+<blockquote>
+<div><p>a Dataframe of the stock with moving average</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.show_adj_close">
+<span class="sig-name descname"><span class="pre">show_adj_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.show_adj_close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.show_adj_close" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot adj close column which is renamed to the self.stock name</p>
+<p>Return:
+fig : module</p>
+<blockquote>
+<div><p>return value which represents the matplotlib figure with adj close column</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.show_bollinger_bands">
+<span class="sig-name descname"><span class="pre">show_bollinger_bands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.show_bollinger_bands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.show_bollinger_bands" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot the bollinger band of the particular stock analysis objects</p>
+<p>Parameters:
+period : int</p>
+<blockquote>
+<div><p>period for the calculation</p>
+</div></blockquote>
+<p>Return:
+fig : matplotlib</p>
+<blockquote>
+<div><p>a figure object represents bollinger band</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.show_moving_average">
+<span class="sig-name descname"><span class="pre">show_moving_average</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'simple'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.show_moving_average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.show_moving_average" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot the moving comparison of the particular stock analysis objects</p>
+<p>Parameters:
+type : str</p>
+<blockquote>
+<div><p>can be simple or exponential moving average</p>
+</div></blockquote>
+<dl class="simple">
+<dt>period<span class="classifier">list</span></dt><dd><p>a list of period to which moving average is calculated</p>
+</dd>
+</dl>
+<p>Return:
+fig : matplotlib</p>
+<blockquote>
+<div><p>a figure object represents moving average</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.show_moving_average_convergence_divergence">
+<span class="sig-name descname"><span class="pre">show_moving_average_convergence_divergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fastperiod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slowperiod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">26</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signalperiod</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.show_moving_average_convergence_divergence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.show_moving_average_convergence_divergence" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot the moving average convergence divergence (MACD) of the particular stock analysis objects</p>
+<p>Parameters:
+fastperiod : int</p>
+<blockquote>
+<div><p>fast period for the calculation</p>
+</div></blockquote>
+<dl class="simple">
+<dt>slowperiod<span class="classifier">int</span></dt><dd><p>slow period for the calculation</p>
+</dd>
+<dt>signalperiod<span class="classifier">int</span></dt><dd><p>signal period for the calculation</p>
+</dd>
+</dl>
+<p>Return:
+fig : matplotlib</p>
+<blockquote>
+<div><p>a figure object represents moving average convergence divergence</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="xquantipy.stocks.ticker.Ticker.show_parabolic_sar">
+<span class="sig-name descname"><span class="pre">show_parabolic_sar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">af</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_af</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/xquantipy/stocks/ticker.html#Ticker.show_parabolic_sar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#xquantipy.stocks.ticker.Ticker.show_parabolic_sar" title="Link to this definition">¶</a></dt>
+<dd><p>Summary:
+A method to plot the Parabolic SAR of the particular stock analysis objects</p>
+<p>Parameters:
+af : int</p>
+<blockquote>
+<div><p>acceleration factor for the calculation</p>
+</div></blockquote>
+<dl class="simple">
+<dt>max_af<span class="classifier">int</span></dt><dd><p>max acceleration factor for the calculation</p>
+</dd>
+</dl>
+<p>Return:
+fig : matplotlib</p>
+<blockquote>
+<div><p>a figure object represents parabolic SAR</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-xquantipy.stocks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-xquantipy.stocks" title="Link to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">XQuantiPy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="xquantipy.html">xquantipy package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="xquantipy.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xquantipy.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xquantipy.html#module-xquantipy.constants">xquantipy.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xquantipy.html#module-xquantipy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="xquantipy.html">xquantipy package</a><ul>
+      <li>Previous: <a href="xquantipy.fetcher.html" title="previous chapter">xquantipy.fetcher package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Sai Charan Vadakapur.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/xquantipy.stocks.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
