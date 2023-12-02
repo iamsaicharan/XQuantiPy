@@ -2,6 +2,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import xquantipy.constants as constants
+import plotly.graph_objects as go
+
 
 class Analysis(object):
     """
@@ -61,6 +63,8 @@ class Analysis(object):
         A method to get visualization for gdp of the object macros
 
         Parameters:
+        filter : str
+            a string for filter
         period : str
             a string for period: "10Y"
 
@@ -70,14 +74,12 @@ class Analysis(object):
         """
         assert type(filter) == str, "Error: Invalid filter type"
         assert type(period) == str, "Error: Invalid period type"
-        df = self.get_merged_macro(filter = filter, period=period)
+        df = self.get_merged_macro(filter=filter, period=period)
         df.set_index('Year', inplace=True)
+        traces = []
         for column in df.columns:
-            plt.plot(df.index, df[column], label=column)
-        plt.title(str(filter) + ' Comparison')
-        plt.xlabel('Year')
-        plt.ylabel(str(filter))
-        plt.legend()
-        plt.grid(True)
-        plt.tight_layout() 
-        return plt
+            trace = go.Scatter(x=df.index, y=df[column], mode='lines', name=column)
+            traces.append(trace)
+        layout = go.Layout(title=str(filter) + ' Comparison', xaxis=dict(title='Year'), yaxis=dict(title=str(filter)), showlegend=True, template='plotly_dark')
+        fig = go.Figure(data=traces, layout=layout)
+        return fig
