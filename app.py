@@ -3,6 +3,8 @@ import yfinance as yf
 from urllib.parse import urlparse, parse_qs
 from http.server import HTTPServer
 from xquantipy.stocks.ticker import Ticker
+from xquantipy.economics.macro import Macro
+from xquantipy.economics.analysis import Analysis
 
 
 class StockDataHandler(http.server.SimpleHTTPRequestHandler):
@@ -29,9 +31,27 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
 
         if parsed_url.path == '/economics':
             query_params = parse_qs(parsed_url.query)
+            print(query_params)
             if query_params == {}:
                 country = 'Welcome'
                 chart = ''
+            else:
+                country_codes = query_params.get('country')
+                country_codes_list = []
+                for item in country_codes:
+                    if ',' in item:
+                        country_codes_list.extend(item.split(','))
+                    else:
+                        country_codes_list.append(item)
+                country_codes_list = [str(item) for item in country_codes_list]
+                period = query_params.get('period')[0]
+                economic_indicator = query_params.get('indicator')[0]
+                macro_list = []
+                for i in country_codes_list:
+                    macro_list.append(Macro(i))
+                df = Analysis(macro_list)
+                country = str(country_codes)
+                chart = df.visualize(filter=economic_indicator, period=period).to_html()
             variables = {
                 'country': country,
                 'plot': chart,
@@ -52,7 +72,6 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
                 symbol = 'Welcome'
                 chart = ''
             else:
-                filter_type = query_params.get('indicators')
                 symbol = query_params.get('symbol')[0]
                 period = query_params.get('period')[0]
                 del query_params['symbol']
@@ -60,6 +79,7 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
                 if query_params == {}:
                     df = Ticker(symbol, period=period).show_adj_close()
                 else:
+                    filter_type = query_params.get('indicators')
                     if 'moving_average' in filter_type:
                         ma_period = query_params.get('ma_period')
                         period_list = []

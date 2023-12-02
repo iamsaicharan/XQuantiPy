@@ -18,22 +18,12 @@
 <body>
 <h1>XQuantiPy - <span id="tickerName", type="text">{{country}}</span></h1>
 <div>
-    <label for="stock_symbol">Country:</label>
-    <input type="text" id="stock_symbol" name="stock_symbol">
-    <label for="stock_period">Stock period:</label>
-    <input type="text" id="stock_period" name="stock_period">
-</div>
-<label for="options">Select an option:</label>
-<select id="options" onchange="updateFilters()">
-    <option value="default">Select an option</option>
-    <option value="moving_average">Moving Average</option>
-    <option value="macd">Moving Average Convergence Divergence</option>
-</select>
-<div id="filterContainerMa" style="display: none;">
-    <label for="maPeriods">Periods:</label>
-    <input type="text" id="maPeriods" name="periods">
-    <label for="maType">Type:</label>
-    <input type="text" id="maType" name="type">
+    <label for="country_symbol">Country:</label>
+    <input type="text" id="country_symbol" name="country_symbol">
+    <label for="country_period">period:</label>
+    <input type="text" id="country_period" name="country_period">
+    <label for="indicator">indicator:</label>
+    <input type="text" id="indicator" name="indicator">
 </div>
 <button onclick="submitFilters()">Submit</button>
 <div>
@@ -42,33 +32,21 @@
 </body>
 
 <script>
-    function updateFilters() {
-        var selectedOption = document.getElementById("options").value;
-        var filterContainerMa = document.getElementById("filterContainerMa");
-        filterContainerMa.style.display = "none";
-        if (selectedOption === "moving_average") {
-            filterContainerMa.style.display = "block";
-            document.getElementById("maPeriods").placeholder = "Enter Periods for MA ex: 20,30,40";
-            document.getElementById("maType").placeholder = "Enter Type of MA - Simple or Exponential";
-        } else if (selectedOption === "macd") {
-            filterContainer.style.display = "block";
-            document.getElementById("filter1").placeholder = "Enter filter for Option 2";
-            document.getElementById("filter2").placeholder = "Enter another filter for Option 2";
-        }
-    }
     function submitFilters() {
-        var selectedOption = document.getElementById("options").value;
-        var ticker = encodeURIComponent(document.getElementById("stock_symbol").value);
-        var period = encodeURIComponent(document.getElementById("stock_period").value);
-        if (selectedOption === "moving_average") {
-            var maPeriodsValue = encodeURIComponent(document.getElementById("maPeriods").value);
-            var maType = encodeURIComponent(document.getElementById("maType").value);
-            var url = "/stocks?symbol=" + ticker + "&period=" + period + "&indicators=" + selectedOption + "&type=" + maType + "&ma_period=" + maPeriodsValue
-            window.location.href = url;
-        } else if (selectedOption === "default") {
-            var url = "/stocks?symbol=" + ticker + "&period=" + period
-            window.location.href = url;
-        }
+        var country_symbol = encodeURIComponent(document.getElementById("country_symbol").value);
+        var country_period = encodeURIComponent(document.getElementById("country_period").value);
+        var indicator = encodeURIComponent(document.getElementById("indicator").value);
+        var url = "/economics?country=" + country_symbol + "&period=" + country_period + "&indicator=" + indicator
+        window.location.href = url;
+        // if (selectedOption === "moving_average") {
+        //     var maPeriodsValue = encodeURIComponent(document.getElementById("maPeriods").value);
+        //     var maType = encodeURIComponent(document.getElementById("maType").value);
+        //     var url = "/stocks?symbol=" + ticker + "&period=" + period + "&indicators=" + selectedOption + "&type=" + maType + "&ma_period=" + maPeriodsValue
+        //     window.location.href = url;
+        // } else if (selectedOption === "default") {
+        //     var url = "/stocks?symbol=" + ticker + "&period=" + period
+        //     window.location.href = url;
+        // }
     }
 </script>
 </html>
