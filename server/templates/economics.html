@@ -4,36 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XQuantiPy - Economics</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         body {
             background-color: #111111;
             color: #f2f5fa;
             font-family: Arial, Helvetica, sans-serif;
             margin: 5%;
+            font-size: 16px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .dropdown-select {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            border: 1px solid #f2f5fa;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .dropdown-option {
+            padding: 5px;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid #111111;
+            background-color: #f2f5fa;
+            color: #111111;
+        }
+
+        .dropdown-option:hover {
+            background-color: #eee;
+        }
+
+        .chart {
+            z-index: -1;
+        }
+
+        input {
+            padding: 5px;
+            color: #f2f5fa;
+            background-color: #111111;
+            border: 1px solid #f2f5fa;
+            min-width: 200px;
+        }
+
+        input::placeholder {
+            color: #f2f5fa;
+            font-size: 16px;
         }
     </style>
+
 </head>
 
 
 <body>
 <h1>XQuantiPy - <span id="tickerName", type="text">{{country}}</span></h1>
 <div>
-    <label for="country_symbol">Country:</label>
-    <input type="text" id="country_symbol" name="country_symbol">
-    <label for="country_period">period:</label>
-    <input type="text" id="country_period" name="country_period">
-    <label for="indicator">indicator:</label>
-    <input type="text" id="indicator" name="indicator">
+    <label for="countryDropdown">Select Countries:</label>
+    <div class="dropdown" id="countryDropdown">
+        <div class="dropdown-select" onclick="toggleDropdown()">
+            <span id="country_symbol">Country</span>
+        </div>
+        <div class="dropdown-options">
+            <div class="dropdown-option" onclick="toggleOption('IND')">India</div>
+            <div class="dropdown-option" onclick="toggleOption('USA')">United States of America</div>
+        </div>
+    </div>
+    <br>
+    <label for="country_period">Period:</label>
+    <input type="text" id="country_period" name="country_period" placeholder="10Y or 20Y">
+    <br>
+    <label for="indicator">Indicator:</label>
+    <input type="text" id="indicator" name="indicator" placeholder="GDP or CRIME_RATE">
 </div>
 <button onclick="submitFilters()">Submit</button>
-<div>
+<div class="chart">
     {{plot}}
 </div>
 </body>
 
 <script>
     function submitFilters() {
-        var country_symbol = encodeURIComponent(document.getElementById("country_symbol").value);
+        var country_symbol = document.getElementById('country_symbol').innerText;
         var country_period = encodeURIComponent(document.getElementById("country_period").value);
         var indicator = encodeURIComponent(document.getElementById("indicator").value);
         var url = "/economics?country=" + country_symbol + "&period=" + country_period + "&indicator=" + indicator
@@ -48,5 +116,27 @@
         //     window.location.href = url;
         // }
     }
+
+    function toggleDropdown() {
+      var dropdownOptions = document.getElementById('countryDropdown').querySelector('.dropdown-options');
+      dropdownOptions.style.display = dropdownOptions.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleOption(option) {
+      var selectedOptions = document.getElementById('country_symbol');
+      if (selectedOptions.innerText === 'Country') {
+        selectedOptions.innerText = option;
+      } else if (!selectedOptions.innerText.includes(option)) {
+        selectedOptions.innerText += ',' + option;
+      }
+    }
+
+    document.addEventListener('click', function(event) {
+      var dropdown = document.getElementById('countryDropdown');
+      if (!dropdown.contains(event.target)) {
+        // Clicked outside the dropdown, close it
+        document.querySelector('.dropdown-options').style.display = 'none';
+      }
+    });
 </script>
 </html>
