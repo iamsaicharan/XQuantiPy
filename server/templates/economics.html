@@ -17,7 +17,7 @@
         .dropdown {
             position: relative;
             display: inline-block;
-            z-index: 1;
+            z-index: 2;
         }
 
         .dropdown-select {
@@ -53,7 +53,7 @@
         }
 
         .chart {
-            z-index: -1;
+            z-index: 0;
         }
 
         input {
@@ -62,12 +62,25 @@
             background-color: #111111;
             border: 1px solid #f2f5fa;
             min-width: 200px;
+            font-size: 16px;
         }
 
         input::placeholder {
             color: #f2f5fa;
             font-size: 16px;
         }
+
+        button {
+            min-width: 80px;
+            background-color: #f2f5fa;
+            color: #111111;
+            appearance: none;
+            font-size: 16px;
+            border: 1px solid #111111;
+        }
+
+
+        
     </style>
 
 </head>
@@ -82,16 +95,59 @@
             <span id="country_symbol">Country</span>
         </div>
         <div class="dropdown-options">
-            <div class="dropdown-option" onclick="toggleOption('IND')">India</div>
             <div class="dropdown-option" onclick="toggleOption('USA')">United States of America</div>
+            <div class="dropdown-option" onclick="toggleOption('CHN')">China</div>
+            <div class="dropdown-option" onclick="toggleOption('JPN')">Japan</div>
+            <div class="dropdown-option" onclick="toggleOption('DEU')">Germany</div>
+            <div class="dropdown-option" onclick="toggleOption('IND')">India</div>
+            <div class="dropdown-option" onclick="toggleOption('GBR')">United Kingdom</div>
         </div>
     </div>
     <br>
     <label for="country_period">Period:</label>
     <input type="text" id="country_period" name="country_period" placeholder="10Y or 20Y">
     <br>
-    <label for="indicator">Indicator:</label>
-    <input type="text" id="indicator" name="indicator" placeholder="GDP or CRIME_RATE">
+    <!-- <label for="indicator">Indicator:</label>
+    <input type="text" id="indicator" name="indicator" placeholder="GDP or CRIME_RATE"> -->
+
+    
+    <label for="indicatorDropdown">Select Indicator:</label>
+    <div class="dropdown" id="indicatorDropdown" style="z-index: 1;">
+        <div class="dropdown-select" onclick="toggleIndicatorDropdown()">
+            <span id="indicator_symbol">Indicator</span>
+        </div>
+        <div class="dropdown-options">
+            <div class="dropdown-option" onclick="toggleIndicatorOption('GDP')">Gross Domestic Product</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('CRIME_RATE')">Crime Rate Statistics</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('GDP_GROWTH')">GDP Growth Rate</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('GDP_PER_CAPITA')">GDP Per Capita</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('GNI')">Gross National Income</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('GNI_PER_CAPITA')">GNI Per Capita</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('DEBT_TO_GNI')">Debt to GNI Ratio</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('GNP')">Gross National Product</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('INFLATION')">Inflation Rate (CPI)</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('MANUFACTURING')">Manufacturing Output</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('POPULATION')">Population</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('HEALTHCARE_SPENDING')">Healthcare Spending</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('POVERTY_RATE')">Poverty Rate</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('UNEMPLOYMENT')">Unemployment Rate</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('MILITARY_SPENDING')">Military Spending (Defense Budget)</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('MILITARY_SIZE')">Military Army Size</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('ARABLE_LAND')">Arable Land</div>
+
+            <!-- <div class="dropdown-option" onclick="toggleIndicatorOption('GDP')">GDP</div>
+            <div class="dropdown-option" onclick="toggleIndicatorOption('CRIME_RATE')">Crime Rate</div> -->
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    
 </div>
 <button onclick="submitFilters()">Submit</button>
 <div class="chart">
@@ -103,18 +159,22 @@
     function submitFilters() {
         var country_symbol = document.getElementById('country_symbol').innerText;
         var country_period = encodeURIComponent(document.getElementById("country_period").value);
-        var indicator = encodeURIComponent(document.getElementById("indicator").value);
+        var indicator = document.getElementById('indicator_symbol').innerText;
+        // var indicator = encodeURIComponent(document.getElementById("indicator").value);
+        if (country_symbol === 'Country') {
+            alert("Please select country");
+            return -1;
+        }
+        if (country_period === '') {
+            alert("Please select period");
+            return -1;
+        }
+        if (indicator === '') {
+            alert("Please select indicator");
+            return -1;
+        }
         var url = "/economics?country=" + country_symbol + "&period=" + country_period + "&indicator=" + indicator
         window.location.href = url;
-        // if (selectedOption === "moving_average") {
-        //     var maPeriodsValue = encodeURIComponent(document.getElementById("maPeriods").value);
-        //     var maType = encodeURIComponent(document.getElementById("maType").value);
-        //     var url = "/stocks?symbol=" + ticker + "&period=" + period + "&indicators=" + selectedOption + "&type=" + maType + "&ma_period=" + maPeriodsValue
-        //     window.location.href = url;
-        // } else if (selectedOption === "default") {
-        //     var url = "/stocks?symbol=" + ticker + "&period=" + period
-        //     window.location.href = url;
-        // }
     }
 
     function toggleDropdown() {
@@ -131,11 +191,29 @@
       }
     }
 
+    function toggleIndicatorDropdown() {
+      var dropdownOptions = document.getElementById('indicatorDropdown').querySelector('.dropdown-options');
+      dropdownOptions.style.display = dropdownOptions.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleIndicatorOption(option) {
+      var selectedOptions = document.getElementById('indicator_symbol');
+      if (selectedOptions.innerText === 'Indicator') {
+        selectedOptions.innerText = option;
+      } else if (!selectedOptions.innerText.includes(option)) {
+        selectedOptions.innerText = option;
+      }
+    }
+
+
     document.addEventListener('click', function(event) {
-      var dropdown = document.getElementById('countryDropdown');
-      if (!dropdown.contains(event.target)) {
-        // Clicked outside the dropdown, close it
-        document.querySelector('.dropdown-options').style.display = 'none';
+      var country_dropdown = document.getElementById('countryDropdown');
+      var indicator_dropdown = document.getElementById('indicatorDropdown');
+      if (!country_dropdown.contains(event.target)) {
+        document.getElementById('countryDropdown').querySelector('.dropdown-options').style.display = 'none';
+      }
+      if (!indicator_dropdown.contains(event.target)) {
+        document.getElementById('indicatorDropdown').querySelector('.dropdown-options').style.display = 'none';
       }
     });
 </script>
