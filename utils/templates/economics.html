@@ -5,84 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XQuantiPy - Economics</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background-color: #111111;
-            color: #f2f5fa;
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 5%;
-            font-size: 16px;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            z-index: 2;
-        }
-
-        .dropdown-select {
-            display: flex;
-            align-items: center;
-            padding: 5px;
-            border: 1px solid #f2f5fa;
-            cursor: pointer;
-            min-width: 200px;
-        }
-
-        .dropdown-options {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            max-height: 200px;
-            overflow-y: auto;
-            display: none;
-        }
-
-        .dropdown-option {
-            padding: 5px;
-            cursor: pointer;
-            user-select: none;
-            border: 1px solid #111111;
-            background-color: #f2f5fa;
-            color: #111111;
-        }
-
-        .dropdown-option:hover {
-            background-color: #eee;
-        }
-
-        .chart {
-            z-index: 0;
-        }
-
-        input {
-            padding: 5px;
-            color: #f2f5fa;
-            background-color: #111111;
-            border: 1px solid #f2f5fa;
-            min-width: 200px;
-            font-size: 16px;
-        }
-
-        input::placeholder {
-            color: #f2f5fa;
-            font-size: 16px;
-        }
-
-        button {
-            min-width: 80px;
-            background-color: #f2f5fa;
-            color: #111111;
-            appearance: none;
-            font-size: 16px;
-            border: 1px solid #111111;
-        }
-
-
-        
-    </style>
-
+    {{styling}}
 </head>
 
 
@@ -139,15 +62,6 @@
             <div class="dropdown-option" onclick="toggleIndicatorOption('CRIME_RATE')">Crime Rate</div> -->
         </div>
     </div>
-
-
-
-
-
-
-
-
-    
 </div>
 <button onclick="submitFilters()">Submit</button>
 <div class="chart">

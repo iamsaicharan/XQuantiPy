@@ -5,7 +5,7 @@ from http.server import HTTPServer
 from xquantipy.stocks.ticker import Ticker
 from xquantipy.economics.macro import Macro
 from xquantipy.economics.analysis import Analysis
-
+from utils.constants import styling
 
 class StockDataHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -15,11 +15,12 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             query_params = parse_qs(parsed_url.query)
             stock_symbol = query_params.get('symbol')[0]
             stock = Ticker(stock_symbol).show_adj_close()
-            with open('server/templates/stocks.html', 'r', encoding='utf-8') as template_file:
+            with open('utils/templates/stocks.html', 'r', encoding='utf-8') as template_file:
                 html_template = template_file.read()
             variables = {
                 'stock': stock_symbol,
                 'plot': stock.to_html(),
+                'styling': styling,
             }
             for variable, value in variables.items():
                 placeholder = "{{" + variable + "}}"
@@ -55,8 +56,9 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             variables = {
                 'country': country,
                 'plot': chart,
+                'styling': styling,
             }
-            with open('server/templates/economics.html', 'r') as template_file:
+            with open('utils/templates/economics.html', 'r') as template_file:
                 html_template = template_file.read()
             for variable, value in variables.items():
                 placeholder = "{{" + variable + "}}"
@@ -95,8 +97,9 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             variables = {
                 'stock': symbol,
                 'plot': chart,
+                'styling': styling,
             }
-            with open('server/templates/stocks.html', 'r') as template_file:
+            with open('utils/templates/stocks.html', 'r') as template_file:
                 html_template = template_file.read()
             for variable, value in variables.items():
                 placeholder = "{{" + variable + "}}"
