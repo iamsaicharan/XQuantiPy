@@ -6,8 +6,6 @@
     <title>XQuantiPy - Stock</title>
     {{styling}}
 </head>
-
-
 <body>
 <h1>XQuantiPy - <span id="tickerName", type="text">{{stock}}</span></h1>
 <div>
@@ -25,10 +23,14 @@
     <option value="macd">Moving Average Convergence Divergence</option>
 </select>
 <div id="filterContainerMa" style="display: none;">
-    <label for="maPeriods">Periods:</label>
-    <input type="text" id="maPeriods" name="periods">
-    <label for="maType">Type:</label>
-    <input type="text" id="maType" name="type">
+    <div>
+        <label for="maPeriods">Periods:</label>
+        <input type="text" id="maPeriods" name="periods">
+    </div>
+    <div>
+        <label for="maType">Type:</label>
+        <input type="text" id="maType" name="type">
+    </div>
 </div>
 <button onclick="submitFilters()">Submit</button>
 <div>
