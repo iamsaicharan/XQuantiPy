@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XQuantiPy - Stock</title>
     {{styling}}
 </head>
+
+
 <body>
+
 <h1>XQuantiPy - <span id="tickerName", type="text">{{stock}}</span></h1>
+
 <div>
     <label for="stock_symbol">Stock symbol:</label>
     <input type="text" id="stock_symbol" name="stock_symbol" placeholder="AAPL or TSLA">
 </div>
+
 <div>
     <label for="stock_period">Period:</label>
     <input type="text" id="stock_period" name="stock_period" placeholder="1Y or 10Y">
 </div>
+
 <label for="options">Select an option:</label>
 <select id="options" onchange="updateFilters()">
     <option value="default">Select an option</option>
     <option value="moving_average">Moving Average</option>
     <option value="macd">Moving Average Convergence Divergence</option>
 </select>
+
 <div id="filterContainerMa" style="display: none;">
     <div>
         <label for="maPeriods">Periods:</label>
@@ -32,10 +41,14 @@
         <input type="text" id="maType" name="type">
     </div>
 </div>
+
+<br>
 <button onclick="submitFilters()">Submit</button>
+
 <div>
     {{plot}}
 </div>
+
 </body>
 
 <script>
@@ -43,6 +56,7 @@
         var selectedOption = document.getElementById("options").value;
         var filterContainerMa = document.getElementById("filterContainerMa");
         filterContainerMa.style.display = "none";
+        alert(selectedOption);
         if (selectedOption === "moving_average") {
             filterContainerMa.style.display = "block";
             document.getElementById("maPeriods").placeholder = "Enter Periods for MA ex: 20,30,40";

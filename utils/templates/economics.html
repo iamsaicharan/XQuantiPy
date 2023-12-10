@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XQuantiPy - Economics</title>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     {{styling}}
 </head>
+
+
 <body>
+
 <h1>XQuantiPy - <span id="tickerName", type="text">{{country}}</span></h1>
+
 <div>
     <label for="countryDropdown">Select Countries:</label>
     <div class="dropdown" id="countryDropdown">
         <div class="dropdown-select" onclick="toggleDropdown()">
             <span id="country_symbol">Country</span>
         </div>
-        <div class="dropdown-options">
-            <div class="dropdown-option" onclick="toggleOption('USA')">United States of America</div>
+        <div class="dropdown-options" id="countryDropdownOptions">
+            <!-- <div class="dropdown-option" onclick="toggleOption('USA')">United States of America</div>
             <div class="dropdown-option" onclick="toggleOption('CHN')">China</div>
             <div class="dropdown-option" onclick="toggleOption('JPN')">Japan</div>
             <div class="dropdown-option" onclick="toggleOption('DEU')">Germany</div>
             <div class="dropdown-option" onclick="toggleOption('IND')">India</div>
-            <div class="dropdown-option" onclick="toggleOption('GBR')">United Kingdom</div>
+            <div class="dropdown-option" onclick="toggleOption('GBR')">United Kingdom</div> -->
         </div>
     </div>
     <br>
@@ -52,9 +57,6 @@
             <div class="dropdown-option" onclick="toggleIndicatorOption('MILITARY_SPENDING')">Military Spending (Defense Budget)</div>
             <div class="dropdown-option" onclick="toggleIndicatorOption('MILITARY_SIZE')">Military Army Size</div>
             <div class="dropdown-option" onclick="toggleIndicatorOption('ARABLE_LAND')">Arable Land</div>
-
-            <!-- <div class="dropdown-option" onclick="toggleIndicatorOption('GDP')">GDP</div>
-            <div class="dropdown-option" onclick="toggleIndicatorOption('CRIME_RATE')">Crime Rate</div> -->
         </div>
     </div>
 </div>
@@ -65,11 +67,247 @@
 </body>
 
 <script>
+  function convertToTitleCase(str){
+    return str.replace(/\b\w/g, function (match) {
+        return match.toUpperCase();
+    }).replace(/-/g, ' '); 
+  }
+
+  const COUNTRY_CODES = {
+  'USA': 'united-states',
+  'CHN': 'china',
+  'JPN': 'japan',
+  'DEU': 'germany',
+  'IND': 'india',
+  'GBR': 'united-kingdom',
+  'FRA': 'france',
+  'RUS': 'russia',
+  'CAN': 'canada',
+  'ITA': 'italy',
+  'BRA': 'brazil',
+  'AUS': 'australia',
+  'KOR': 'south-korea',
+  'MEX': 'mexico',
+  'ESP': 'spain',
+  'IDN': 'indonesia',
+  'SAU': 'saudi-arabia',
+  'NLD': 'netherlands',
+  'TUR': 'turkey',
+  'CHE': 'switzerland',
+  'POL': 'poland',
+  'ARG': 'argentina',
+  'SWE': 'sweden',
+  'NOR': 'norway',
+  'BEL': 'belgium',
+  'IRL': 'ireland',
+  'ISR': 'israel',
+  'ARE': 'uae',
+  'THA': 'thailand',
+  'NGA': 'nigeria',
+  'EGY': 'egypt',
+  'AUT': 'austria',
+  'SGP': 'singapore',
+  'BGD': 'bangladesh',
+  'VNM': 'vietnam',
+  'MYS': 'malaysia',
+  'ZAF': 'south-africa',
+  'PHL': 'philippines',
+  'DNK': 'denmark',
+  'IRN': 'iran',
+  'PAK': 'pakistan',
+  'HKG': 'hong-kong',
+  'COL': 'colombia',
+  'ROU': 'romania',
+  'CHL': 'chile',
+  'CZE': 'czech-republic',
+  'FIN': 'finland',
+  'IRQ': 'iraq',
+  'PRT': 'portugal',
+  'NZL': 'new-zealand',
+  'PER': 'peru',
+  'QAT': 'qatar',
+  'KAZ': 'kazakhstan',
+  'GRC': 'greece',
+  'DZA': 'algeria',
+  'KWT': 'kuwait',
+  'HUN': 'hungary',
+  'UKR': 'ukraine',
+  'MAR': 'morocco',
+  'ETH': 'ethiopia',
+  'SVK': 'slovak-republic',
+  'ECU': 'ecuador',
+  'OMN': 'oman',
+  'DOM': 'dominican-republic',
+  'PRI': 'puerto-rico',
+  'KEN': 'kenya',
+  'AGO': 'angola',
+  'GTM': 'guatemala',
+  'BGR': 'bulgaria',
+  'LUX': 'luxembourg',
+  'UZB': 'uzbekistan',
+  'AZE': 'azerbaijan',
+  'PAN': 'panama',
+  'TZA': 'tanzania',
+  'LKA': 'sri-lanka',
+  'GHA': 'ghana',
+  'BLR': 'belarus',
+  'URY': 'uruguay',
+  'HRV': 'croatia',
+  'LTU': 'lithuania',
+  'CRI': 'costa-rica',
+  'SRB': 'serbia',
+  'SVN': 'slovenia',
+  'MMR': 'myanmar',
+  'COD': 'democratic-republic-of-congo',
+  'SDN': 'sudan',
+  'JOR': 'jordan',
+  'TUN': 'tunisia',
+  'LBY': 'libya',
+  'UGA': 'uganda',
+  'BHR': 'bahrain',
+  'CMR': 'cameroon',
+  'BOL': 'bolivia',
+  'PRY': 'paraguay',
+  'LVA': 'latvia',
+  'NPL': 'nepal',
+  'EST': 'estonia',
+  'SLV': 'el-salvador',
+  'HND': 'honduras',
+  'PNG': 'papua-new-guinea',
+  'KHM': 'cambodia',
+  'ZMB': 'zambia',
+  'CYP': 'cyprus',
+  'TTO': 'trinidad-and-tobago',
+  'ISL': 'iceland',
+  'SEN': 'senegal',
+  'GEO': 'georgia',
+  'BIH': 'bosnia',
+  'MAC': 'macao',
+  'GIN': 'guinea',
+  'GAB': 'gabon',
+  'ZWE': 'zimbabwe',
+  'BWA': 'botswana',
+  'HTI': 'haiti',
+  'ARM': 'armenia',
+  'PSE': 'west-bank-and-gaza',
+  'BFA': 'burkina-faso',
+  'ALB': 'albania',
+  'MLI': 'mali',
+  'MOZ': 'mozambique',
+  'MLT': 'malta',
+  'BEN': 'benin',
+  'JAM': 'jamaica',
+  'MNG': 'mongolia',
+  'BRN': 'brunei',
+  'LAO': 'lao-pdr',
+  'NIC': 'nicaragua',
+  'GUY': 'guyana',
+  'MDG': 'madagascar',
+  'COG': 'republic-of-congo',
+  'MDA': 'moldova',
+  'NER': 'niger',
+  'MKD': 'north-macedonia',
+  'RWA': 'rwanda',
+  'MWI': 'malawi',
+  'MUS': 'mauritius',
+  'BHS': 'bahamas',
+  'TCD': 'chad',
+  'NAM': 'namibia',
+  'GNQ': 'equatorial-guinea',
+  'KGZ': 'kyrgyz-republic',
+  'TJK': 'tajikistan',
+  'MRT': 'mauritania',
+  'XKX': 'kosovo',
+  'TGO': 'togo',
+  'SOM': 'somalia',
+  'BMU': 'bermuda',
+  'MDV': 'maldives',
+  'MNE': 'montenegro',
+  'BRB': 'barbados',
+  'FJI': 'fiji',
+  'SWZ': 'eswatini',
+  'LBR': 'liberia',
+  'SLE': 'sierra-leone',
+  'SUR': 'suriname',
+  'DJI': 'djibouti',
+  'AND': 'andorra',
+  'TLS': 'timor-leste',
+  'BDI': 'burundi',
+  'BLZ': 'belize',
+  'LSO': 'lesotho',
+  'CAF': 'central-african-republic',
+  'CPV': 'cabo-verde',
+  'GMB': 'gambia',
+  'LCA': 'st-lucia',
+  'ATG': 'antigua-and-barbuda',
+  'GNB': 'guinea-bissau',
+  'SLB': 'solomon-islands',
+  'SYC': 'seychelles',
+  'SXM': 'sint-maarten-dutch-part',
+  'GRD': 'grenada',
+  'COM': 'comoros',
+  'TCA': 'turks-and-caicos-islands',
+  'VUT': 'vanuatu',
+  'KNA': 'st-kitts-and-nevis',
+  'VCT': 'st-vincent-and-the-grenadines',
+  'WSM': 'samoa',
+  'DMA': 'dominica',
+  'STP': 'sao-tome-and-principe',
+  'FSM': 'micronesia',
+  'MHL': 'marshall-islands',
+  'KIR': 'kiribati',
+  'NRU': 'nauru',
+  'TUV': 'tuvalu',
+  'PYF': 'french-polynesia',
+  'TON': 'tonga',
+  'AFG': 'afghanistan',
+  'CUB': 'cuba',
+  'IMN': 'isle-of-man',
+  'CHI': 'channel-islands',
+  'CUW': 'curacao',
+  'GRL': 'greenland',
+  'SMR': 'san-marino',
+  'MCO': 'monaco',
+  'CYM': 'cayman-islands',
+  'PLW': 'palau',
+  'SYR': 'syrian-arab-republic',
+  'MNP': 'northern-mariana-islands',
+  'GUM': 'guam',
+  'LIE': 'liechtenstein',
+  'VIR': 'virgin-islands-us',
+  'BTN': 'bhutan',
+  'ASM': 'american-samoa',
+  'YEM': 'yemen',
+  'TKM': 'turkmenistan',
+  'FRO': 'faroe-islands',
+  'ABW': 'aruba',
+  'LBN': 'lebanon',
+  'NCL': 'new-caledonia'
+  };
+  function addOptions() {
+      const dropdownOptions = document.getElementById('countryDropdownOptions');
+      for (const code in COUNTRY_CODES) {
+          if (COUNTRY_CODES.hasOwnProperty(code)) {
+              const option = document.createElement('div');
+              option.className = 'dropdown-option';
+              option.textContent = convertToTitleCase(COUNTRY_CODES[code]);
+              option.setAttribute('onclick', `toggleOption('${code}')`);
+              dropdownOptions.appendChild(option);
+          }
+      }
+  }
+  window.onload = addOptions;
+
+  function toggleOption(countryCode) {
+      alert(`Selected country code: ${countryCode}`);
+  }
+</script>
+
+<script>
     function submitFilters() {
         var country_symbol = document.getElementById('country_symbol').innerText;
         var country_period = encodeURIComponent(document.getElementById("country_period").value);
         var indicator = document.getElementById('indicator_symbol').innerText;
-        // var indicator = encodeURIComponent(document.getElementById("indicator").value);
         if (country_symbol === 'Country') {
             alert("Please select country");
             return -1;
