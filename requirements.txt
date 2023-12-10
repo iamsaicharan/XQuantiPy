@@ -1,7 +1,8 @@
-beautifulsoup4==4.11.2
-matplotlib==3.7.1
-numpy==1.24.4
-pandas==2.0.3
+beautifulsoup4==4.12.2
+cloudscraper==1.2.71
+matplotlib==3.8.2
+numpy==1.26.2
+pandas==2.1.4
 pipreqs==0.4.13
 plotly==5.18.0
 pytest==7.4.3
