@@ -56,7 +56,6 @@
         var selectedOption = document.getElementById("options").value;
         var filterContainerMa = document.getElementById("filterContainerMa");
         filterContainerMa.style.display = "none";
-        alert(selectedOption);
         if (selectedOption === "moving_average") {
             filterContainerMa.style.display = "block";
             document.getElementById("maPeriods").placeholder = "Enter Periods for MA ex: 20,30,40";

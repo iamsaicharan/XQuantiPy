@@ -151,3 +151,14 @@ select::-ms-expand {
   .select-items div:hover, .same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
   }
+
+  .a-button {
+    min-width: 80px;
+    background-color: #f2f5fa;
+    color: #111111;
+    appearance: none;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #111111;
+    text-decoration: none;
+  }

@@ -13,13 +13,9 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
 
         if parsed_url.path == '/':
             query_params = parse_qs(parsed_url.query)
-            stock_symbol = query_params.get('symbol')[0]
-            stock = Ticker(stock_symbol).show_adj_close()
-            with open('utils/templates/stocks.html', 'r', encoding='utf-8') as template_file:
+            with open('utils/templates/home.html', 'r', encoding='utf-8') as template_file:
                 html_template = template_file.read()
             variables = {
-                'stock': stock_symbol,
-                'plot': stock.to_html(),
                 'styling': styling,
             }
             for variable, value in variables.items():
