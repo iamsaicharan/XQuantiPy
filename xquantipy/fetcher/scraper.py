@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from xquantipy.constants import COUNTRY_CODES, MACRO_INDICATORS
 import numpy as np
+import cloudscraper
 
 class Fetcher:
     """
@@ -38,8 +39,10 @@ class Fetcher:
         for i in indicators:
             base_url = "http://www.macrotrends.net/countries/"
             base_url = base_url + country_code + "/" + COUNTRY_CODES[country_code] + "/" + MACRO_INDICATORS[i]
-            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
-            response = requests.get(base_url, headers=headers)
+            scraper = cloudscraper.create_scraper(delay=10, browser={'custom': 'ScraperBot/1.0',}) 
+            response = scraper.get(base_url)
+            # headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
+            # response = requests.get(base_url, headers=headers)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 target_div = soup.find('div', class_='col-xs-6')
