@@ -3,7 +3,7 @@ import setuptools
 # print(setuptools.find_packages())
 setuptools.setup(
     name='xquantipy',
-    version='0.2.2',
+    version='0.2.3',
     author='Sai Charan Vadakapur',
     description='Module for financial analysis',
     packages=setuptools.find_packages(),
@@ -16,6 +16,7 @@ setuptools.setup(
     platforms=['any'],
     install_requires=[
         'beautifulsoup4',
+        'cloudscraper',
         'matplotlib',
         'numpy',
         'pandas',
