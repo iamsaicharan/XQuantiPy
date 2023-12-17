@@ -18,6 +18,11 @@
     Elliott Waves
     Ichimoku Cloud
 * More comprehensive test cases with proper input values
+* Calmar Ratio
+* Sortino Ratio
+* Sharpe Ratio
+* Quantitive Risk Management
+* Portfolio Risk Management
 * statistical analysis
     a. Correlation analysis
     b. regression analysis

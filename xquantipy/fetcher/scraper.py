@@ -72,6 +72,43 @@ class Fetcher:
             merged_df = pd.merge(merged_df, i, on='Year', how='outer')
         return merged_df
     
+    def get_ticker_news(self, ticker):
+        """
+        Summary:
+        Method to retrive data from news from bing.com
+
+        Parameters:
+        ticker : str
+            a str which represents the ticker code
+
+        Return:
+        news : list
+            returns a list which represents news data for ticker
+        """
+        stock = ticker.split('.', 1)[0]
+        base_url = f"https://www.bing.com/news/search?q={stock}&qft=sortbydate"
+        scraper = cloudscraper.create_scraper(delay=10, browser={'custom': 'ScraperBot/1.0', 'enable_selenium': True}) 
+        response = scraper.get(base_url,)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        news_div = soup.find(attrs={'id':'algocore'})
+        news_cards = news_div.find_all('div', class_='news-card newsitem cardcommon')
+        news = []
+        for card in news_cards:
+            author = card['data-author']
+            title = card.find('a', class_='title').text
+            description = card.find('div', class_='snippet').text
+            url = card['data-url']
+            timestamp = card.find('span', {'aria-label': True}).text
+            current = {
+                "Author": author,
+                "Title": title,
+                "URL": url,
+                "Description": description,
+                "Timestamp": timestamp 
+            }
+            news.append(current)
+        return news
+    
     def _convert_to_numeric(self, value):
         """
         Summary:
