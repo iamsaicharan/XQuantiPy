@@ -1,4 +1,4 @@
-* Visulization modules
+Visulization modules
     Average Directional Index (ADX)
     Stochastic Oscillator
     Relative Strength Index (RSI)
@@ -17,13 +17,16 @@
     Fibonacci Retracement
     Elliott Waves
     Ichimoku Cloud
-* More comprehensive test cases with proper input values
-* Calmar Ratio
-* Sortino Ratio
-* Sharpe Ratio
-* Quantitive Risk Management
-* Portfolio Risk Management
-* statistical analysis
+News
+Commodity Data
+
+More comprehensive test cases with proper input values
+Calmar Ratio
+Sortino Ratio
+Sharpe Ratio
+Quantitive Risk Management
+Portfolio Risk Management
+statistical analysis
     a. Correlation analysis
     b. regression analysis
     c. time series analysis
@@ -45,5 +48,5 @@
         i. portfolio optimization
         ii. risk assessment
         iii. decision-making
-    g. time-varying models
+  g. time-varying models
 * model development

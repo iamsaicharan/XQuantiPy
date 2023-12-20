@@ -22,6 +22,20 @@ class Macro(object):
         self.country = country
     
     def get_macros(self, filters = [], period = constants.PERIOD):
+        """
+        Summary:
+        A method to get the macros data for a Macro object
+
+        Parameters:
+        filters: list
+            list of Macro economic indicators
+        period : int
+            period for the calculation
+
+        Return:
+        data : Dataframe
+            a pandas dataframe with macro data for a particular object
+        """
         assert type(filters) == list, "Error: Invalid filters type"
         assert type(period) == str, "Error: Invalid entry for the period"
         pattern = r'\d+'
