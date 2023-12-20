@@ -147,6 +147,25 @@ class Ticker(object):
         alpha = simple_return_stock - (risk_free_rate + self.get_beta()*(simple_return_index - risk_free_rate))
         return float(alpha)
     
+    def show_candle_stick(self):
+        """
+        Summary:
+        A method to plot candle strick for self.stock name
+
+        Return:
+        fig : module
+            return value which represents the matplotlib figure with candle stick
+        """
+        df = self.data
+        fig = go.Figure(data=[go.Candlestick(x=df['Date'],open=df['Open'],high=df['High'],low=df['Low'],close=df['Close'])])
+        fig.update_layout(
+            title=f'{self.stock}', 
+            xaxis_title='Date', 
+            yaxis_title='Price', 
+            showlegend=True,
+            template='plotly_dark',)
+        return fig
+    
     def get_moving_average(self, type='simple', period = [constants.MOVING_AVERAGE_PERIOD]):
         """
         Summary:
