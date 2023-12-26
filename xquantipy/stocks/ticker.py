@@ -166,6 +166,18 @@ class Ticker(object):
             template='plotly_dark',)
         return fig
     
+    def show_line(self):
+        df = self.data
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df['Date'], y=df['Adj Close'], mode='lines', name='Closing Price'))
+        fig.update_layout(
+            title=f'{self.stock} Stock Price with {self.period}-Day', 
+            xaxis_title='Date', 
+            yaxis_title='Price', 
+            showlegend=True,
+            template='plotly_dark',)
+        return fig
+    
     def get_moving_average(self, type='simple', period = [constants.MOVING_AVERAGE_PERIOD]):
         """
         Summary:
