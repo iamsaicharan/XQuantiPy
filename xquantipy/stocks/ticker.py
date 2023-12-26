@@ -178,6 +178,18 @@ class Ticker(object):
             template='plotly_dark',)
         return fig
     
+    def show_volume(self):
+        df = self.data
+        fig = go.Figure()
+        fig.add_trace(go.Bar(x=df['Date'], y=df['Volume'], name='Volume'))
+        fig.update_layout(
+            title=f'{self.stock} Stock Volume with {self.period}-Day', 
+            xaxis_title='Date', 
+            yaxis_title='Price', 
+            showlegend=True,
+            template='plotly_dark',)
+        return fig
+    
     def get_moving_average(self, type='simple', period = [constants.MOVING_AVERAGE_PERIOD]):
         """
         Summary:
