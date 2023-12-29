@@ -167,6 +167,14 @@ class Ticker(object):
         return fig
     
     def show_line(self):
+        """
+        Summary:
+        A method to plot line chart for self.stock data
+
+        Return:
+        fig : module
+            return value which represents the plotly figure with line chart
+        """
         df = self.data
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=df['Date'], y=df['Adj Close'], mode='lines', name='Closing Price'))
@@ -179,6 +187,14 @@ class Ticker(object):
         return fig
     
     def show_volume(self):
+        """
+        Summary:
+        A method to plot volume chart for self.stock data
+
+        Return:
+        fig : module
+            return value which represents the plotly figure with volume chart
+        """
         df = self.data
         fig = go.Figure()
         fig.add_trace(go.Bar(x=df['Date'], y=df['Volume'], name='Volume'))
@@ -189,6 +205,29 @@ class Ticker(object):
             showlegend=True,
             template='plotly_dark',)
         return fig
+    
+    # def get_rsi(self, window=14, upper_band=70, lower_band=30):
+    #     df = self.data
+    #     diff = df['Close'].diff(1)
+    #     gain = diff.where(diff > 0, 0)
+    #     loss = -diff.where(diff < 0, 0)
+    #     avg_gain = gain.rolling(window=window, min_periods=1).mean()
+    #     avg_loss = loss.rolling(window=window, min_periods=1).mean()
+    #     rs = avg_gain / avg_loss
+    #     rsi = 100 - (100 / (1 + rs))
+    #     df['RSI'] = rsi
+    #     fig = go.Figure()
+    #     fig.add_trace(go.Scatter(x=df['Date'], y=df['RSI'], yaxis='y2', mode='lines', name='RSI', line=dict(color='red')))
+    #     fig.add_shape(go.layout.Shape(type='line', x0=df['Date'].min(), x1=df['Date'].max(), y0=upper_band, y1=upper_band, line=dict(color='green', width=2), yref='y2'))
+    #     fig.add_shape(go.layout.Shape(type='line', x0=df['Date'].min(), x1=df['Date'].max(), y0=lower_band, y1=lower_band, line=dict(color='green', width=2), yref='y2'))
+    #     fig.update_layout(
+    #         title='RSI Chart',
+    #         xaxis=dict(title='Date'),
+    #         yaxis=dict(title='Price'),
+    #         yaxis2=dict(title='RSI', overlaying='y', side='right'),
+    #         template='plotly_dark',
+    #     )
+    #     return fig
     
     def get_moving_average(self, type='simple', period = [constants.MOVING_AVERAGE_PERIOD]):
         """
