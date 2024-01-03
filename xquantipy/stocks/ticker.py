@@ -416,6 +416,25 @@ class Ticker(object):
             template='plotly_dark',
             )
         return fig
+    
+    def show_profit_loss(self, investment=5000):
+        initial = self.data.Close.iloc[0]
+        shares = int(investment/initial)
+        current = self.data.Close.iloc[-1]
+        current_value = self.data.Close.iloc[-1]*shares
+        profit_loss = current_value - investment
+        percent_gain_loss = (profit_loss/current_value)*100
+        percentage_returns = (current_value - investment) / investment * 100
+        net_gains_or_losses = (current - initial) / initial * 100
+        total_return = ((current_value / investment) - 1) * 100
+
+        print("Financial Analysis")
+        print('-' * 50)
+        print(f"{self.stock} profit or loss: ${profit_loss:.2f}")
+        print(f"Percentage gain or loss: {percent_gain_loss:.2f}%")
+        print(f"Percentage of returns: {percentage_returns:.2f}%")
+        print(f"Net gains or losses: {net_gains_or_losses:.2f}%")
+        print(f"Total Returns: {total_return:.2f}%")
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
