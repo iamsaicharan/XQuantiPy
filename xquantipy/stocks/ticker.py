@@ -420,14 +420,33 @@ class Ticker(object):
     def show_profit_loss(self, investment=5000):
         initial = self.data.Close.iloc[0]
         shares = int(investment/initial)
+        investment = initial*shares
         current = self.data.Close.iloc[-1]
-        current_value = self.data.Close.iloc[-1]*shares
+        current_value = current * shares
         profit_loss = current_value - investment
         percent_gain_loss = (profit_loss/current_value)*100
         percentage_returns = (current_value - investment) / investment * 100
         net_gains_or_losses = (current - initial) / initial * 100
         total_return = ((current_value / investment) - 1) * 100
-
+        dates = self.data['Date']
+        profits_losses = [investment]
+        print(profits_losses, shares)
+        for i in range(1, len(self.data)):
+            shares = int(profits_losses[0] / self.data.Close.iloc[0])
+            close_price = self.data.Close.iloc[i]
+            current_value = close_price * shares
+            profit_loss_ = current_value - investment
+            print(profits_losses[-1] + profit_loss_, close_price, current_value, profit_loss_)
+            profits_losses.append(profits_losses[0] + profit_loss_)
+        import matplotlib.pyplot as plt
+        plt.figure(figsize=(10, 6))
+        plt.plot(dates, profits_losses, label='Profit/Loss')
+        plt.axhline(investment, color='black', linestyle='--', label='Breakeven')
+        plt.xlabel('Date')
+        plt.ylabel('Accumulated Profit/Loss')
+        plt.title('Accumulated Profit/Loss Over Time')
+        plt.legend()
+        plt.show()
         print("Financial Analysis")
         print('-' * 50)
         print(f"{self.stock} profit or loss: ${profit_loss:.2f}")
@@ -435,6 +454,7 @@ class Ticker(object):
         print(f"Percentage of returns: {percentage_returns:.2f}%")
         print(f"Net gains or losses: {net_gains_or_losses:.2f}%")
         print(f"Total Returns: {total_return:.2f}%")
+        
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
