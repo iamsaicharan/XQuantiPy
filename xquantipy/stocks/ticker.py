@@ -430,30 +430,31 @@ class Ticker(object):
         total_return = ((current_value / investment) - 1) * 100
         dates = self.data['Date']
         profits_losses = [investment]
-        print(profits_losses, shares)
         for i in range(1, len(self.data)):
             shares = int(profits_losses[0] / self.data.Close.iloc[0])
             close_price = self.data.Close.iloc[i]
             current_value = close_price * shares
             profit_loss_ = current_value - investment
-            print(profits_losses[-1] + profit_loss_, close_price, current_value, profit_loss_)
             profits_losses.append(profits_losses[0] + profit_loss_)
-        import matplotlib.pyplot as plt
-        plt.figure(figsize=(10, 6))
-        plt.plot(dates, profits_losses, label='Profit/Loss')
-        plt.axhline(investment, color='black', linestyle='--', label='Breakeven')
-        plt.xlabel('Date')
-        plt.ylabel('Accumulated Profit/Loss')
-        plt.title('Accumulated Profit/Loss Over Time')
-        plt.legend()
-        plt.show()
-        print("Financial Analysis")
-        print('-' * 50)
-        print(f"{self.stock} profit or loss: ${profit_loss:.2f}")
-        print(f"Percentage gain or loss: {percent_gain_loss:.2f}%")
-        print(f"Percentage of returns: {percentage_returns:.2f}%")
-        print(f"Net gains or losses: {net_gains_or_losses:.2f}%")
-        print(f"Total Returns: {total_return:.2f}%")
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=dates, y=profits_losses, mode='lines', name='Profit/Loss'))
+        fig.add_shape(go.layout.Shape(type='line', x0=min(dates), x1=max(dates), y0=investment, y1=investment, line=dict(color='white', dash='dash'), name='Breakeven'))
+        fig.update_layout(
+            title='Accumulated Profit/Loss Over Time',
+            xaxis=dict(title='Date'),
+            yaxis=dict(title='Accumulated Profit/Loss'),
+            legend=dict(x=0, y=1, traceorder='normal'),
+            template='plotly_dark',
+        )
+        results = {
+            "profit_loss": profit_loss,
+            "percent_gain_loss": percent_gain_loss,
+            "percentage_returns": percentage_returns,
+            "net_gains_or_losses": net_gains_or_losses,
+            "total_return": total_return
+        }
+        return fig, results
+        
         
 
     def __str__(self):
