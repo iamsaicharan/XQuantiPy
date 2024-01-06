@@ -418,6 +418,20 @@ class Ticker(object):
         return fig
     
     def show_profit_loss(self, investment=5000):
+        """
+        Summary:
+        A method to plot the bollinger band of the particular stock analysis objects
+
+        Parameters:
+        investment : int
+            investment value to invest in the stock
+
+        Return:
+        fig : matplotlib
+            a figure object represents profit loss
+        results : dict
+            a dictionary with profit loss results
+        """
         initial = self.data.Close.iloc[0]
         shares = int(investment/initial)
         investment = initial*shares
