@@ -468,8 +468,18 @@ class Ticker(object):
             "total_return": total_return
         }
         return fig, results
-        
-        
+    
+    def get_kelly_criterion(self):
+        df = self.data
+        df['Daily Return'] = df['Adj Close'].pct_change()
+        mean_return = df['Daily Return'].mean()
+        std_return = df['Daily Return'].std()
+        p_win = 0.5 + (mean_return / (2 * std_return))
+        p_loss = 1 - p_win
+        # odds = 1
+        odds = p_win/p_loss
+        kelly_fraction = (p_win * odds - p_loss) / odds
+        return kelly_fraction
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
