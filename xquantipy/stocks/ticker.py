@@ -470,6 +470,14 @@ class Ticker(object):
         return fig, results
     
     def get_kelly_criterion(self):
+        """
+        Summary:
+        A method to get the kelly criterion for the whole period of the dataframe
+
+        Return:
+        kelly_criterion : int
+            an integer represents kelly criterion
+        """
         df = self.data
         df['Daily Return'] = df['Adj Close'].pct_change()
         mean_return = df['Daily Return'].mean()
