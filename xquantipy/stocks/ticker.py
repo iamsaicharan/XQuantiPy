@@ -7,6 +7,7 @@ import numpy as np
 import statsmodels.api as sm
 import requests
 import json
+from matplotlib import dates as mdates
 
 
 class Ticker(object):
@@ -468,6 +469,26 @@ class Ticker(object):
             "total_return": total_return
         }
         return fig, results
+    
+    def show_roi(self):
+        df = self.data
+        df["ROI"] = ((df["Adj Close"] - df["Adj Close"].shift(1)) / df["Adj Close"].shift(1) * 100)
+        dfc = df.copy()
+        dfc["VolumePositive"] = dfc["Open"] < dfc["Adj Close"]
+        dfc = dfc.reset_index()
+        dfc["Date"] = pd.to_datetime(dfc["Date"])
+        dfc["Date"] = dfc["Date"].apply(mdates.date2num)
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df.index, y=df["ROI"], mode='lines', name='ROI', line=dict(color='red')))
+        fig.add_trace(go.Scatter(x=df.index, y=[0] * len(df), mode='lines', name='Zero Line', line=dict(color='blue', dash='dash')))
+        fig.update_layout(
+            title='ROI',
+            xaxis=dict(title='Date'),
+            yaxis=dict(title='ROI'),
+            legend=dict(x=0, y=1, traceorder='normal'),
+            template='plotly_dark',
+        )
+        return fig
     
     def get_kelly_criterion(self):
         """
