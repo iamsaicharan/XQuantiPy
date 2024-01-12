@@ -471,6 +471,14 @@ class Ticker(object):
         return fig, results
     
     def show_roi(self):
+        """
+        Summary:
+        A method to get the plot for roi
+
+        Return:
+        fig : matplotlib
+            a figure object represents roi
+        """
         df = self.data
         df["ROI"] = ((df["Adj Close"] - df["Adj Close"].shift(1)) / df["Adj Close"].shift(1) * 100)
         dfc = df.copy()
