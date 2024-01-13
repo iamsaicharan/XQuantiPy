@@ -12,19 +12,11 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
         parsed_url = urlparse(self.path)
 
         if parsed_url.path == '/':
-            query_params = parse_qs(parsed_url.query)
-            with open('utils/templates/home.html', 'r', encoding='utf-8') as template_file:
-                html_template = template_file.read()
-            variables = {
-                'styling': styling,
-            }
-            for variable, value in variables.items():
-                placeholder = "{{" + variable + "}}"
-                html_template = html_template.replace(placeholder, value)
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(html_template.encode('utf-8'))
+            self.handle_home_request()
+        # elif parsed_url.path == '/economics':
+        #     self.handle_economics_request(parsed_url)
+        # elif parsed_url.path == '/stocks':
+        #     self.handle_stocks_request(parsed_url)
 
         if parsed_url.path == '/economics':
             query_params = parse_qs(parsed_url.query)
@@ -105,9 +97,24 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(html_template.encode('utf-8'))
 
-    def get_stock_data(self, stock_symbol):
-        stock = yf.download(stock_symbol)
-        return stock
+    def handle_home_request(self):
+        html_template = self.load_template('home.html')
+        variables = {'styling': styling}
+        self.send_response_and_html(200, html_template, variables)
+        pass
+
+    def send_response_and_html(self, status_code, html_template, variables):
+        for variable, value in variables.items():
+            placeholder = "{{" + variable + "}}"
+            html_template = html_template.replace(placeholder, value)
+        self.send_response(status_code)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.wfile.write(html_template.encode('utf-8'))
+
+    def load_template(self, template_name):
+        with open(f'utils/templates/{template_name}', 'r', encoding='utf-8') as template_file:
+            return template_file.read()
 
 def main():
     PORT = 8000
