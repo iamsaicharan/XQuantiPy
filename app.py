@@ -13,48 +13,10 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
 
         if parsed_url.path == '/':
             self.handle_home_request()
-        # elif parsed_url.path == '/economics':
-        #     self.handle_economics_request(parsed_url)
+        elif parsed_url.path == '/economics':
+            self.handle_economics_request(parsed_url)
         # elif parsed_url.path == '/stocks':
         #     self.handle_stocks_request(parsed_url)
-
-        if parsed_url.path == '/economics':
-            query_params = parse_qs(parsed_url.query)
-            print(query_params)
-            if query_params == {}:
-                country = 'Welcome'
-                chart = ''
-            else:
-                country_codes = query_params.get('country')
-                country_codes_list = []
-                for item in country_codes:
-                    if ',' in item:
-                        country_codes_list.extend(item.split(','))
-                    else:
-                        country_codes_list.append(item)
-                country_codes_list = [str(item) for item in country_codes_list]
-                period = query_params.get('period')[0]
-                economic_indicator = query_params.get('indicator')[0]
-                macro_list = []
-                for i in country_codes_list:
-                    macro_list.append(Macro(i))
-                df = Analysis(macro_list)
-                country = str(country_codes)
-                chart = df.visualize(filter=economic_indicator, period=period).to_html()
-            variables = {
-                'country': country,
-                'plot': chart,
-                'styling': styling,
-            }
-            with open('utils/templates/economics.html', 'r') as template_file:
-                html_template = template_file.read()
-            for variable, value in variables.items():
-                placeholder = "{{" + variable + "}}"
-                html_template = html_template.replace(placeholder, value)
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(html_template.encode('utf-8'))
         
         if parsed_url.path == '/stocks':
             query_params = parse_qs(parsed_url.query)
@@ -100,6 +62,37 @@ class StockDataHandler(http.server.SimpleHTTPRequestHandler):
     def handle_home_request(self):
         html_template = self.load_template('home.html')
         variables = {'styling': styling}
+        self.send_response_and_html(200, html_template, variables)
+        pass
+
+    def handle_economics_request(self,parsed_url):
+        html_template = self.load_template('economics.html')
+        query_params = parse_qs(parsed_url.query)
+        if query_params == {}:
+            country = 'Welcome'
+            chart = ''
+        else:
+            country_codes = query_params.get('country')
+            country_codes_list = []
+            for item in country_codes:
+                if ',' in item:
+                    country_codes_list.extend(item.split(','))
+                else:
+                    country_codes_list.append(item)
+            country_codes_list = [str(item) for item in country_codes_list]
+            period = query_params.get('period')[0]
+            economic_indicator = query_params.get('indicator')[0]
+            macro_list = []
+            for i in country_codes_list:
+                macro_list.append(Macro(i))
+            df = Analysis(macro_list)
+            country = str(country_codes)
+            chart = df.visualize(filter=economic_indicator, period=period).to_html()
+        variables = {
+            'country': country,
+            'plot': chart,
+            'styling': styling,
+        }
         self.send_response_and_html(200, html_template, variables)
         pass
 
