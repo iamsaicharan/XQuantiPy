@@ -3,7 +3,7 @@ import setuptools
 # print(setuptools.find_packages())
 setuptools.setup(
     name='xquantipy',
-    version='0.2.3',
+    version='0.2.4',
     author='Sai Charan Vadakapur',
     description='Module for financial analysis',
     packages=setuptools.find_packages(),
