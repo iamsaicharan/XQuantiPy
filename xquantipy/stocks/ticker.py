@@ -517,6 +517,17 @@ class Ticker(object):
         odds = p_win/p_loss
         kelly_fraction = (p_win * odds - p_loss) / odds
         return kelly_fraction
+    
+    def show_mass_index(self, periods=25, ema_periods=9):
+        df = self.data
+        df['hl_range'] = df['High'] - df['Low']
+        df['hl_double_exponential_ema'] = df['hl_range'].ewm(span=ema_periods, adjust=False).mean()
+        df['hl_double_exponential_ema_sum'] = df['hl_double_exponential_ema'].rolling(window=periods).sum()
+        df['mass_index'] = df['hl_double_exponential_ema_sum'] / df['hl_double_exponential_ema']
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=df.index, y=df['mass_index'], mode='lines', name='Mass Index', line=dict(color='blue')))
+        fig.update_layout(title='Mass Index of the Stock', xaxis_title='Date', yaxis_title='Mass Index',template='plotly_dark')
+        fig.show()
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
