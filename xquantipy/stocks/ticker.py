@@ -421,7 +421,7 @@ class Ticker(object):
     def show_profit_loss(self, investment=5000):
         """
         Summary:
-        A method to plot the bollinger band of the particular stock analysis objects
+        A method to plot the bollinger band of the particular stock objects
 
         Parameters:
         investment : int
@@ -519,6 +519,21 @@ class Ticker(object):
         return kelly_fraction
     
     def show_mass_index(self, periods=25, ema_periods=9):
+        """
+        Summary:
+        A method to plot the mass index of the particular stock objects
+
+        Parameters:
+        periods : int (optional default=25)
+            period of the plot
+        ema_periods : int (optional default=9)
+            exponential moving average period of the plot
+
+
+        Return:
+        fig : matplotlib
+            a figure object represents mass index
+        """
         df = self.data
         df['hl_range'] = df['High'] - df['Low']
         df['hl_double_exponential_ema'] = df['hl_range'].ewm(span=ema_periods, adjust=False).mean()
@@ -527,7 +542,7 @@ class Ticker(object):
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=df.index, y=df['mass_index'], mode='lines', name='Mass Index', line=dict(color='blue')))
         fig.update_layout(title='Mass Index of the Stock', xaxis_title='Date', yaxis_title='Mass Index',template='plotly_dark')
-        fig.show()
+        return fig
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
