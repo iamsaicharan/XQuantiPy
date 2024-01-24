@@ -543,6 +543,19 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=df.index, y=df['mass_index'], mode='lines', name='Mass Index', line=dict(color='blue')))
         fig.update_layout(title='Mass Index of the Stock', xaxis_title='Date', yaxis_title='Mass Index',template='plotly_dark')
         return fig
+    
+    def show_vortex_indicator(self, period=14):
+        data = self.data
+        data['TR'] = data['High'].combine(data['Low'], max) - data['Low'].combine(data['Close'].shift(), max)
+        data['+VM'] = abs(data['High'].shift() - data['Low'])
+        data['-VM'] = abs(data['Low'].shift() - data['High'])
+        data['+VI'] = data['+VM'].rolling(window=period).sum() / data['TR'].rolling(window=period).sum()
+        data['-VI'] = data['-VM'].rolling(window=period).sum() / data['TR'].rolling(window=period).sum()
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=data['Date'], y=data['+VI'], mode='lines', name='+VI'))
+        fig.add_trace(go.Scatter(x=data['Date'], y=data['-VI'], mode='lines', name='-VI'))
+        fig.update_layout(title=f'Vortex Indicator', xaxis_title='Date', yaxis_title='Vortex Indicator',legend=dict(x=0, y=1, traceorder='normal'),template='plotly_dark')
+        fig.show()
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]

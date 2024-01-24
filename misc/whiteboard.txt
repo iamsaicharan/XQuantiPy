@@ -71,9 +71,9 @@ Trend
 -----
 Moving Average Convergence Divergence (MACD)
 Average Directional Movement Index (ADX)
-Vortex Indicator (VI)
+Vortex Indicator (VI) - 01/24
 Trix (TRIX)
-Mass Index (MI)
+Mass Index (MI) - 01/22
 Commodity Channel Index (CCI)
 Detrended Price Oscillator (DPO)
 KST Oscillator (KST)
@@ -93,3 +93,5 @@ Others
 ------
 Daily Return (DR)
 Cumulative Return (CR)
+
+work on the doc strings
