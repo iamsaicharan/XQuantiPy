@@ -53,6 +53,7 @@ class Ticker(object):
         data['cum_return'] = (1+data['daily_return']).cumprod()-1
         self.data = data
         url = constants.BASE_OPTIONS_URL + str(self.stock)
+        print(url)
         response = requests.get(url=url, headers=constants.HEADERS)
         if response.status_code == 200:
             data = json.loads(response.content)
@@ -555,7 +556,27 @@ class Ticker(object):
         fig.add_trace(go.Scatter(x=data['Date'], y=data['+VI'], mode='lines', name='+VI'))
         fig.add_trace(go.Scatter(x=data['Date'], y=data['-VI'], mode='lines', name='-VI'))
         fig.update_layout(title=f'Vortex Indicator', xaxis_title='Date', yaxis_title='Vortex Indicator',legend=dict(x=0, y=1, traceorder='normal'),template='plotly_dark')
-        fig.show()
+        return fig
+    
+    def show_stochastic_oscillator(self, period=14, k=3):
+        df = self.data
+        df['Lowest_Low'] = df['Low'].rolling(window=period).min()
+        df['Highest_High'] = df['High'].rolling(window=period).max()
+        df['%K'] = ((df['Close'] - df['Lowest_Low']) / (df['Highest_High'] - df['Lowest_Low'])) * 100
+        df['%D'] = df['%K'].rolling(window=k).mean()
+        trace_close = go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price', line=dict(color='white'))
+        trace_percent_k = go.Scatter(x=df['Date'], y=df['%K'], mode='lines', name='%K Line')
+        trace_percent_d = go.Scatter(x=df['Date'], y=df['%D'], mode='lines', name='%D Line')
+        overbought_line = go.Scatter(x=df['Date'], y=[80] * len(df), mode='lines', name='Overbought Level')
+        oversold_line = go.Scatter(x=df['Date'], y=[20] * len(df), mode='lines', name='Oversold Level')
+        layout = go.Layout(title='Stochastic Oscillator',
+                        xaxis=dict(title='Date'),
+                        yaxis=dict(title='Value'),
+                        showlegend=True,
+                        legend=dict(x=0, y=1, traceorder='normal', orientation='h'))
+        fig = go.Figure(data=[trace_close, trace_percent_k, trace_percent_d, overbought_line, oversold_line], layout=layout)
+        fig.update_layout(template='plotly_dark')
+        return fig
 
     def __str__(self):
         start_date = str(self.data['Date'].iloc[0])[:10]
