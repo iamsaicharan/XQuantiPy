@@ -41,6 +41,15 @@ class Ticker(object):
         plot the Parabolic SAR of the particular stock analysis objects
     show_bollinger_bands(self, period=constants.MOVING_AVERAGE_PERIOD)
         plot the bollinger band of the particular stock analysis objects
+    show_profit_loss(self, investment=5000)
+        plot profit loss of a particular stock based on the investment
+    show_roi(self)
+        plot roi of a particular stock
+    get_kelly_criterion(self)
+    show_mass_index(self, periods=25, ema_periods=9)
+    show_vortex_indicator(self, period=14)
+    show_stochastic_oscillator(self, period=14, k=3)
+
     """
     def __init__(self, ticker, period = constants.PERIOD):
         assert type(ticker) == str, "Error: ticker argument must be a string"
@@ -422,7 +431,7 @@ class Ticker(object):
     def show_profit_loss(self, investment=5000):
         """
         Summary:
-        A method to plot the bollinger band of the particular stock objects
+        A method to plot the profit or loss based on investments of the particular stock objects
 
         Parameters:
         investment : int
