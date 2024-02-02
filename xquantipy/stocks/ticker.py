@@ -555,6 +555,18 @@ class Ticker(object):
         return fig
     
     def show_vortex_indicator(self, period=14):
+        """
+        Summary:
+        A method to plot the vortex indicator of the particular stock objects
+
+        Parameters:
+        periods : int (optional default=14)
+            period of the plot
+
+        Return:
+        fig : matplotlib
+            a figure object represents mass index
+        """
         data = self.data
         data['TR'] = data['High'].combine(data['Low'], max) - data['Low'].combine(data['Close'].shift(), max)
         data['+VM'] = abs(data['High'].shift() - data['Low'])
