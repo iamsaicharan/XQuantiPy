@@ -580,6 +580,20 @@ class Ticker(object):
         return fig
     
     def show_stochastic_oscillator(self, period=14, k=3):
+        """
+        Summary:
+        A method to plot the stochastic oscillator of the particular stock objects
+
+        Parameters:
+        periods : int (optional default=14)
+            period of the plot
+        k : int (optional default=3)
+            k value
+
+        Return:
+        fig : matplotlib
+            a figure object represents mass index
+        """
         df = self.data
         df['Lowest_Low'] = df['Low'].rolling(window=period).min()
         df['Highest_High'] = df['High'].rolling(window=period).max()
