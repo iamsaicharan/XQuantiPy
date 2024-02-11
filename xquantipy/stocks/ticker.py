@@ -354,7 +354,6 @@ class Ticker(object):
         new_psar = initial_psar
         extreme_point = self.data.High[0]
         for i in range(1, len(self.data)):
-            current_close = self.data.Close[i]
             current_high = self.data.High[i]
             current_low = self.data.Low[i]
             if trend == 'up':
