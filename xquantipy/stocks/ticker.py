@@ -62,7 +62,6 @@ class Ticker(object):
         data['cum_return'] = (1+data['daily_return']).cumprod()-1
         self.data = data
         url = constants.BASE_OPTIONS_URL + str(self.stock)
-        print(url)
         response = requests.get(url=url, headers=constants.HEADERS)
         if response.status_code == 200:
             data = json.loads(response.content)
@@ -117,6 +116,7 @@ class Ticker(object):
             return value which represents the beta of the stock
         """
         index_data = yf.download(index, period=self.period)
+        index_data = self.data
         index_data.reset_index(inplace=True)
         stock_returns = self.data['Adj Close'].pct_change().dropna()
         market_returns = index_data['Adj Close'].pct_change().dropna()
